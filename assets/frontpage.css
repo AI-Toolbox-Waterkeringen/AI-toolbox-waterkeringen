@@ -1,0 +1,38 @@
+.page-layout-custom {
+    display: grid;
+    align-items: center;
+    text-align: center;
+}
+
+.page-layout-custom header {
+    align-self: last baseline;
+}
+
+.page-layout-custom .abstract .block-title {
+    display: none;
+}
+
+.page-layout-custom .custom-content {
+    align-self: first baseline;
+}
+
+.page-layout-custom header h1 {
+    font-size: 3rem;
+}
+
+.page-layout-custom .btn-primary {
+    margin-left: 0.05rem;
+    margin-right: 0.05rem;
+}
+
+@media screen and (min-width: 780px) {
+    .page-layout-custom header h1 {
+        font-size: 4rem;
+    }
+    .page-layout-custom .btn-primary {
+        padding-left: 3rem;
+        padding-right: 3rem;
+        margin-left: 0.25rem;
+        margin-right: 0.25rem;
+    }
+}

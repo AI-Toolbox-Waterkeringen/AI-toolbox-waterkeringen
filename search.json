@@ -1,0 +1,209 @@
+[
+  {
+    "objectID": "more.html",
+    "href": "more.html",
+    "title": "Meer weten",
+    "section": "",
+    "text": "Placeholder.",
+    "crumbs": [
+      "Meer weten"
+    ]
+  },
+  {
+    "objectID": "examples/image_predictor_example.html",
+    "href": "examples/image_predictor_example.html",
+    "title": "Object masks in images from prompts with SAM 2",
+    "section": "",
+    "text": "# Copyright (c) Meta Platforms, Inc. and affiliates.\nSegment Anything Model 2 (SAM 2) predicts object masks given prompts that indicate the desired object. The model first converts the image into an image embedding that allows high quality masks to be efficiently produced from a prompt.\nThe SAM2ImagePredictor class provides an easy interface to the model for prompting the model. It allows the user to first set an image using the set_image method, which calculates the necessary image embeddings. Then, prompts can be provided via the predict method to efficiently predict masks from those prompts. The model can take as input both point and box prompts, as well as masks from the previous iteration of prediction.",
+    "crumbs": [
+      "Meer weten",
+      "Object masks in images from prompts with SAM 2"
+    ]
+  },
+  {
+    "objectID": "examples/image_predictor_example.html#environment-set-up",
+    "href": "examples/image_predictor_example.html#environment-set-up",
+    "title": "Object masks in images from prompts with SAM 2",
+    "section": "Environment Set-up",
+    "text": "Environment Set-up\nIf running locally using jupyter, first install segment-anything-2 in your environment using the installation instructions in the repository.\nIf running from Google Colab, set using_colab=True below and run the cell. In Colab, be sure to select ‘GPU’ under ‘Edit’-&gt;‘Notebook Settings’-&gt;‘Hardware accelerator’. Note that it’s recommended to use A100 or L4 GPUs when running in Colab (T4 GPUs might also work, but could be slow and might run out of memory in some cases).\n\nusing_colab = False\n\n\nif using_colab:\n    import torch\n    import torchvision\n    print(\"PyTorch version:\", torch.__version__)\n    print(\"Torchvision version:\", torchvision.__version__)\n    print(\"CUDA is available:\", torch.cuda.is_available())\n    import sys\n    !{sys.executable} -m pip install opencv-python matplotlib\n    !{sys.executable} -m pip install 'git+https://github.com/facebookresearch/segment-anything-2.git'\n\n    !mkdir -p images\n    !wget -P images https://raw.githubusercontent.com/facebookresearch/segment-anything-2/main/notebooks/images/truck.jpg\n    !wget -P images https://raw.githubusercontent.com/facebookresearch/segment-anything-2/main/notebooks/images/groceries.jpg\n\n    !mkdir -p ../checkpoints/\n    !wget -P ../checkpoints/ https://dl.fbaipublicfiles.com/segment_anything_2/072824/sam2_hiera_large.pt",
+    "crumbs": [
+      "Meer weten",
+      "Object masks in images from prompts with SAM 2"
+    ]
+  },
+  {
+    "objectID": "examples/image_predictor_example.html#set-up",
+    "href": "examples/image_predictor_example.html#set-up",
+    "title": "Object masks in images from prompts with SAM 2",
+    "section": "Set-up",
+    "text": "Set-up\nNecessary imports and helper functions for displaying points, boxes, and masks.\n\nimport os\n# if using Apple MPS, fall back to CPU for unsupported ops\nos.environ[\"PYTORCH_ENABLE_MPS_FALLBACK\"] = \"1\"\nimport numpy as np\nimport torch\nimport matplotlib.pyplot as plt\nfrom PIL import Image\n\n\n# select the device for computation\nif torch.cuda.is_available():\n    device = torch.device(\"cuda\")\nelif torch.backends.mps.is_available():\n    device = torch.device(\"mps\")\nelse:\n    device = torch.device(\"cpu\")\nprint(f\"using device: {device}\")\n\nif device.type == \"cuda\":\n    # use bfloat16 for the entire notebook\n    torch.autocast(\"cuda\", dtype=torch.bfloat16).__enter__()\n    # turn on tfloat32 for Ampere GPUs (https://pytorch.org/docs/stable/notes/cuda.html#tensorfloat-32-tf32-on-ampere-devices)\n    if torch.cuda.get_device_properties(0).major &gt;= 8:\n        torch.backends.cuda.matmul.allow_tf32 = True\n        torch.backends.cudnn.allow_tf32 = True\nelif device.type == \"mps\":\n    print(\n        \"\\nSupport for MPS devices is preliminary. SAM 2 is trained with CUDA and might \"\n        \"give numerically different outputs and sometimes degraded performance on MPS. \"\n        \"See e.g. https://github.com/pytorch/pytorch/issues/84936 for a discussion.\"\n    )\n\nusing device: cuda\n\n\n\nnp.random.seed(3)\n\ndef show_mask(mask, ax, random_color=False, borders = True):\n    if random_color:\n        color = np.concatenate([np.random.random(3), np.array([0.6])], axis=0)\n    else:\n        color = np.array([30/255, 144/255, 255/255, 0.6])\n    h, w = mask.shape[-2:]\n    mask = mask.astype(np.uint8)\n    mask_image =  mask.reshape(h, w, 1) * color.reshape(1, 1, -1)\n    if borders:\n        import cv2\n        contours, _ = cv2.findContours(mask,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE) \n        # Try to smooth contours\n        contours = [cv2.approxPolyDP(contour, epsilon=0.01, closed=True) for contour in contours]\n        mask_image = cv2.drawContours(mask_image, contours, -1, (1, 1, 1, 0.5), thickness=2) \n    ax.imshow(mask_image)\n\ndef show_points(coords, labels, ax, marker_size=375):\n    pos_points = coords[labels==1]\n    neg_points = coords[labels==0]\n    ax.scatter(pos_points[:, 0], pos_points[:, 1], color='green', marker='*', s=marker_size, edgecolor='white', linewidth=1.25)\n    ax.scatter(neg_points[:, 0], neg_points[:, 1], color='red', marker='*', s=marker_size, edgecolor='white', linewidth=1.25)   \n\ndef show_box(box, ax):\n    x0, y0 = box[0], box[1]\n    w, h = box[2] - box[0], box[3] - box[1]\n    ax.add_patch(plt.Rectangle((x0, y0), w, h, edgecolor='green', facecolor=(0, 0, 0, 0), lw=2))    \n\ndef show_masks(image, masks, scores, point_coords=None, box_coords=None, input_labels=None, borders=True):\n    for i, (mask, score) in enumerate(zip(masks, scores)):\n        plt.figure(figsize=(10, 10))\n        plt.imshow(image)\n        show_mask(mask, plt.gca(), borders=borders)\n        if point_coords is not None:\n            assert input_labels is not None\n            show_points(point_coords, input_labels, plt.gca())\n        if box_coords is not None:\n            # boxes\n            show_box(box_coords, plt.gca())\n        if len(scores) &gt; 1:\n            plt.title(f\"Mask {i+1}, Score: {score:.3f}\", fontsize=18)\n        plt.axis('off')\n        plt.show()",
+    "crumbs": [
+      "Meer weten",
+      "Object masks in images from prompts with SAM 2"
+    ]
+  },
+  {
+    "objectID": "examples/image_predictor_example.html#example-image",
+    "href": "examples/image_predictor_example.html#example-image",
+    "title": "Object masks in images from prompts with SAM 2",
+    "section": "Example image",
+    "text": "Example image\n\nimage = Image.open('images/truck.jpg')\nimage = np.array(image.convert(\"RGB\"))\n\n\nplt.figure(figsize=(10, 10))\nplt.imshow(image)\nplt.axis('on')\nplt.show()",
+    "crumbs": [
+      "Meer weten",
+      "Object masks in images from prompts with SAM 2"
+    ]
+  },
+  {
+    "objectID": "examples/image_predictor_example.html#selecting-objects-with-sam-2",
+    "href": "examples/image_predictor_example.html#selecting-objects-with-sam-2",
+    "title": "Object masks in images from prompts with SAM 2",
+    "section": "Selecting objects with SAM 2",
+    "text": "Selecting objects with SAM 2\nFirst, load the SAM 2 model and predictor. Change the path below to point to the SAM 2 checkpoint. Running on CUDA and using the default model are recommended for best results.\n\nfrom sam2.build_sam import build_sam2\nfrom sam2.sam2_image_predictor import SAM2ImagePredictor\n\nsam2_checkpoint = \"../checkpoints/sam2_hiera_large.pt\"\nmodel_cfg = \"sam2_hiera_l.yaml\"\n\nsam2_model = build_sam2(model_cfg, sam2_checkpoint, device=device)\n\npredictor = SAM2ImagePredictor(sam2_model)\n\nProcess the image to produce an image embedding by calling SAM2ImagePredictor.set_image. SAM2ImagePredictor remembers this embedding and will use it for subsequent mask prediction.\n\npredictor.set_image(image)\n\nTo select the truck, choose a point on it. Points are input to the model in (x,y) format and come with labels 1 (foreground point) or 0 (background point). Multiple points can be input; here we use only one. The chosen point will be shown as a star on the image.\n\ninput_point = np.array([[500, 375]])\ninput_label = np.array([1])\n\n\nplt.figure(figsize=(10, 10))\nplt.imshow(image)\nshow_points(input_point, input_label, plt.gca())\nplt.axis('on')\nplt.show()  \n\n\n\n\n\n\n\n\n\nprint(predictor._features[\"image_embed\"].shape, predictor._features[\"image_embed\"][-1].shape)\n\ntorch.Size([1, 256, 64, 64]) torch.Size([256, 64, 64])\n\n\nPredict with SAM2ImagePredictor.predict. The model returns masks, quality predictions for those masks, and low resolution mask logits that can be passed to the next iteration of prediction.\n\nmasks, scores, logits = predictor.predict(\n    point_coords=input_point,\n    point_labels=input_label,\n    multimask_output=True,\n)\nsorted_ind = np.argsort(scores)[::-1]\nmasks = masks[sorted_ind]\nscores = scores[sorted_ind]\nlogits = logits[sorted_ind]\n\nWith multimask_output=True (the default setting), SAM 2 outputs 3 masks, where scores gives the model’s own estimation of the quality of these masks. This setting is intended for ambiguous input prompts, and helps the model disambiguate different objects consistent with the prompt. When False, it will return a single mask. For ambiguous prompts such as a single point, it is recommended to use multimask_output=True even if only a single mask is desired; the best single mask can be chosen by picking the one with the highest score returned in scores. This will often result in a better mask.\n\nmasks.shape  # (number_of_masks) x H x W\n\n(3, 1200, 1800)\n\n\n\nshow_masks(image, masks, scores, point_coords=input_point, input_labels=input_label, borders=True)",
+    "crumbs": [
+      "Meer weten",
+      "Object masks in images from prompts with SAM 2"
+    ]
+  },
+  {
+    "objectID": "examples/image_predictor_example.html#specifying-a-specific-object-with-additional-points",
+    "href": "examples/image_predictor_example.html#specifying-a-specific-object-with-additional-points",
+    "title": "Object masks in images from prompts with SAM 2",
+    "section": "Specifying a specific object with additional points",
+    "text": "Specifying a specific object with additional points\nThe single input point is ambiguous, and the model has returned multiple objects consistent with it. To obtain a single object, multiple points can be provided. If available, a mask from a previous iteration can also be supplied to the model to aid in prediction. When specifying a single object with multiple prompts, a single mask can be requested by setting multimask_output=False.\n\ninput_point = np.array([[500, 375], [1125, 625]])\ninput_label = np.array([1, 1])\n\nmask_input = logits[np.argmax(scores), :, :]  # Choose the model's best mask\n\n\nmasks, scores, _ = predictor.predict(\n    point_coords=input_point,\n    point_labels=input_label,\n    mask_input=mask_input[None, :, :],\n    multimask_output=False,\n)\n\n\nmasks.shape\n\n(1, 1200, 1800)\n\n\n\nshow_masks(image, masks, scores, point_coords=input_point, input_labels=input_label)\n\n\n\n\n\n\n\n\nTo exclude the car and specify just the window, a background point (with label 0, here shown in red) can be supplied.\n\ninput_point = np.array([[500, 375], [1125, 625]])\ninput_label = np.array([1, 0])\n\nmask_input = logits[np.argmax(scores), :, :]  # Choose the model's best mask\n\n\nmasks, scores, _ = predictor.predict(\n    point_coords=input_point,\n    point_labels=input_label,\n    mask_input=mask_input[None, :, :],\n    multimask_output=False,\n)\n\n\nshow_masks(image, masks, scores, point_coords=input_point, input_labels=input_label)",
+    "crumbs": [
+      "Meer weten",
+      "Object masks in images from prompts with SAM 2"
+    ]
+  },
+  {
+    "objectID": "examples/image_predictor_example.html#specifying-a-specific-object-with-a-box",
+    "href": "examples/image_predictor_example.html#specifying-a-specific-object-with-a-box",
+    "title": "Object masks in images from prompts with SAM 2",
+    "section": "Specifying a specific object with a box",
+    "text": "Specifying a specific object with a box\nThe model can also take a box as input, provided in xyxy format.\n\ninput_box = np.array([425, 600, 700, 875])\n\n\nmasks, scores, _ = predictor.predict(\n    point_coords=None,\n    point_labels=None,\n    box=input_box[None, :],\n    multimask_output=False,\n)\n\n\nshow_masks(image, masks, scores, box_coords=input_box)",
+    "crumbs": [
+      "Meer weten",
+      "Object masks in images from prompts with SAM 2"
+    ]
+  },
+  {
+    "objectID": "examples/image_predictor_example.html#combining-points-and-boxes",
+    "href": "examples/image_predictor_example.html#combining-points-and-boxes",
+    "title": "Object masks in images from prompts with SAM 2",
+    "section": "Combining points and boxes",
+    "text": "Combining points and boxes\nPoints and boxes may be combined, just by including both types of prompts to the predictor. Here this can be used to select just the trucks’s tire, instead of the entire wheel.\n\ninput_box = np.array([425, 600, 700, 875])\ninput_point = np.array([[575, 750]])\ninput_label = np.array([0])\n\n\nmasks, scores, logits = predictor.predict(\n    point_coords=input_point,\n    point_labels=input_label,\n    box=input_box,\n    multimask_output=False,\n)\n\n\nshow_masks(image, masks, scores, box_coords=input_box, point_coords=input_point, input_labels=input_label)",
+    "crumbs": [
+      "Meer weten",
+      "Object masks in images from prompts with SAM 2"
+    ]
+  },
+  {
+    "objectID": "examples/image_predictor_example.html#batched-prompt-inputs",
+    "href": "examples/image_predictor_example.html#batched-prompt-inputs",
+    "title": "Object masks in images from prompts with SAM 2",
+    "section": "Batched prompt inputs",
+    "text": "Batched prompt inputs\nSAM2ImagePredictor can take multiple input prompts for the same image, using predict method. For example, imagine we have several box outputs from an object detector.\n\ninput_boxes = np.array([\n    [75, 275, 1725, 850],\n    [425, 600, 700, 875],\n    [1375, 550, 1650, 800],\n    [1240, 675, 1400, 750],\n])\n\n\nmasks, scores, _ = predictor.predict(\n    point_coords=None,\n    point_labels=None,\n    box=input_boxes,\n    multimask_output=False,\n)\n\n\nmasks.shape  # (batch_size) x (num_predicted_masks_per_input) x H x W\n\n(4, 1, 1200, 1800)\n\n\n\nplt.figure(figsize=(10, 10))\nplt.imshow(image)\nfor mask in masks:\n    show_mask(mask.squeeze(0), plt.gca(), random_color=True)\nfor box in input_boxes:\n    show_box(box, plt.gca())\nplt.axis('off')\nplt.show()",
+    "crumbs": [
+      "Meer weten",
+      "Object masks in images from prompts with SAM 2"
+    ]
+  },
+  {
+    "objectID": "examples/image_predictor_example.html#end-to-end-batched-inference",
+    "href": "examples/image_predictor_example.html#end-to-end-batched-inference",
+    "title": "Object masks in images from prompts with SAM 2",
+    "section": "End-to-end batched inference",
+    "text": "End-to-end batched inference\nIf all prompts are available in advance, it is possible to run SAM 2 directly in an end-to-end fashion. This also allows batching over images.\n\nimage1 = image  # truck.jpg from above\nimage1_boxes = np.array([\n    [75, 275, 1725, 850],\n    [425, 600, 700, 875],\n    [1375, 550, 1650, 800],\n    [1240, 675, 1400, 750],\n])\n\nimage2 = Image.open('images/groceries.jpg')\nimage2 = np.array(image2.convert(\"RGB\"))\nimage2_boxes = np.array([\n    [450, 170, 520, 350],\n    [350, 190, 450, 350],\n    [500, 170, 580, 350],\n    [580, 170, 640, 350],\n])\n\nimg_batch = [image1, image2]\nboxes_batch = [image1_boxes, image2_boxes]\n\n\npredictor.set_image_batch(img_batch)\n\n\nmasks_batch, scores_batch, _ = predictor.predict_batch(\n    None,\n    None, \n    box_batch=boxes_batch, \n    multimask_output=False\n)\n\n\nfor image, boxes, masks in zip(img_batch, boxes_batch, masks_batch):\n    plt.figure(figsize=(10, 10))\n    plt.imshow(image)   \n    for mask in masks:\n        show_mask(mask.squeeze(0), plt.gca(), random_color=True)\n    for box in boxes:\n        show_box(box, plt.gca())\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nSimilarly, we can have a batch of point prompts defined over a batch of images\n\nimage1 = image  # truck.jpg from above\nimage1_pts = np.array([\n    [[500, 375]],\n    [[650, 750]]\n    ]) # Bx1x2 where B corresponds to number of objects \nimage1_labels = np.array([[1], [1]])\n\nimage2_pts = np.array([\n    [[400, 300]],\n    [[630, 300]],\n])\nimage2_labels = np.array([[1], [1]])\n\npts_batch = [image1_pts, image2_pts]\nlabels_batch = [image1_labels, image2_labels]\n\n\nmasks_batch, scores_batch, _ = predictor.predict_batch(pts_batch, labels_batch, box_batch=None, multimask_output=True)\n\n# Select the best single mask per object\nbest_masks = []\nfor masks, scores in zip(masks_batch,scores_batch):\n    best_masks.append(masks[range(len(masks)), np.argmax(scores, axis=-1)])\n\n\nfor image, points, labels, masks in zip(img_batch, pts_batch, labels_batch, best_masks):\n    plt.figure(figsize=(10, 10))\n    plt.imshow(image)   \n    for mask in masks:\n        show_mask(mask, plt.gca(), random_color=True)\n    show_points(points, labels, plt.gca())",
+    "crumbs": [
+      "Meer weten",
+      "Object masks in images from prompts with SAM 2"
+    ]
+  },
+  {
+    "objectID": "digigids.html",
+    "href": "digigids.html",
+    "title": "DigigGids 2.0",
+    "section": "",
+    "text": "Placeholder."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Over ons",
+    "section": "",
+    "text": "Placeholder."
+  },
+  {
+    "objectID": "contact.html",
+    "href": "contact.html",
+    "title": "Contact",
+    "section": "",
+    "text": "Placeholder."
+  },
+  {
+    "objectID": "examples/automatic_mask_generator_example.html",
+    "href": "examples/automatic_mask_generator_example.html",
+    "title": "Automatically generating object masks with SAM",
+    "section": "",
+    "text": "# Copyright (c) Meta Platforms, Inc. and affiliates.\n# Lightly adapted from https://github.com/facebookresearch/segment-anything/blob/main/notebooks/automatic_mask_generator_example.ipynb\nSince SAM 2 can efficiently process prompts, masks for the entire image can be generated by sampling a large number of prompts over an image.\nThe class SAM2AutomaticMaskGenerator implements this capability. It works by sampling single-point input prompts in a grid over the image, from each of which SAM can predict multiple masks. Then, masks are filtered for quality and deduplicated using non-maximal suppression. Additional options allow for further improvement of mask quality and quantity, such as running prediction on multiple crops of the image or postprocessing masks to remove small disconnected regions and holes.",
+    "crumbs": [
+      "Meer weten",
+      "Automatically generating object masks with SAM"
+    ]
+  },
+  {
+    "objectID": "examples/automatic_mask_generator_example.html#environment-set-up",
+    "href": "examples/automatic_mask_generator_example.html#environment-set-up",
+    "title": "Automatically generating object masks with SAM",
+    "section": "Environment Set-up",
+    "text": "Environment Set-up\nIf running locally using jupyter, first install SAM 2 in your environment using the installation instructions in the repository.\nIf running from Google Colab, set using_colab=True below and run the cell. In Colab, be sure to select ‘GPU’ under ‘Edit’-&gt;‘Notebook Settings’-&gt;‘Hardware accelerator’. Note that it’s recommended to use A100 or L4 GPUs when running in Colab (T4 GPUs might also work, but could be slow and might run out of memory in some cases).\n\nusing_colab = False\n\n\nif using_colab:\n    import torch\n    import torchvision\n    print(\"PyTorch version:\", torch.__version__)\n    print(\"Torchvision version:\", torchvision.__version__)\n    print(\"CUDA is available:\", torch.cuda.is_available())\n    import sys\n    !{sys.executable} -m pip install opencv-python matplotlib\n    !{sys.executable} -m pip install 'git+https://github.com/facebookresearch/segment-anything-2.git'\n\n    !mkdir -p images\n    !wget -P images https://raw.githubusercontent.com/facebookresearch/segment-anything-2/main/notebooks/images/cars.jpg\n\n    !mkdir -p ../checkpoints/\n    !wget -P ../checkpoints/ https://dl.fbaipublicfiles.com/segment_anything_2/072824/sam2_hiera_large.pt",
+    "crumbs": [
+      "Meer weten",
+      "Automatically generating object masks with SAM"
+    ]
+  },
+  {
+    "objectID": "examples/automatic_mask_generator_example.html#set-up",
+    "href": "examples/automatic_mask_generator_example.html#set-up",
+    "title": "Automatically generating object masks with SAM",
+    "section": "Set-up",
+    "text": "Set-up\n\nimport os\n# if using Apple MPS, fall back to CPU for unsupported ops\nos.environ[\"PYTORCH_ENABLE_MPS_FALLBACK\"] = \"1\"\nimport numpy as np\nimport torch\nimport matplotlib.pyplot as plt\nfrom PIL import Image\n\n\n# select the device for computation\nif torch.cuda.is_available():\n    device = torch.device(\"cuda\")\nelif torch.backends.mps.is_available():\n    device = torch.device(\"mps\")\nelse:\n    device = torch.device(\"cpu\")\nprint(f\"using device: {device}\")\n\nif device.type == \"cuda\":\n    # use bfloat16 for the entire notebook\n    torch.autocast(\"cuda\", dtype=torch.bfloat16).__enter__()\n    # turn on tfloat32 for Ampere GPUs (https://pytorch.org/docs/stable/notes/cuda.html#tensorfloat-32-tf32-on-ampere-devices)\n    if torch.cuda.get_device_properties(0).major &gt;= 8:\n        torch.backends.cuda.matmul.allow_tf32 = True\n        torch.backends.cudnn.allow_tf32 = True\nelif device.type == \"mps\":\n    print(\n        \"\\nSupport for MPS devices is preliminary. SAM 2 is trained with CUDA and might \"\n        \"give numerically different outputs and sometimes degraded performance on MPS. \"\n        \"See e.g. https://github.com/pytorch/pytorch/issues/84936 for a discussion.\"\n    )\n\nusing device: cuda\n\n\n\nnp.random.seed(3)\n\ndef show_anns(anns, borders=True):\n    if len(anns) == 0:\n        return\n    sorted_anns = sorted(anns, key=(lambda x: x['area']), reverse=True)\n    ax = plt.gca()\n    ax.set_autoscale_on(False)\n\n    img = np.ones((sorted_anns[0]['segmentation'].shape[0], sorted_anns[0]['segmentation'].shape[1], 4))\n    img[:, :, 3] = 0\n    for ann in sorted_anns:\n        m = ann['segmentation']\n        color_mask = np.concatenate([np.random.random(3), [0.5]])\n        img[m] = color_mask \n        if borders:\n            import cv2\n            contours, _ = cv2.findContours(m.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE) \n            # Try to smooth contours\n            contours = [cv2.approxPolyDP(contour, epsilon=0.01, closed=True) for contour in contours]\n            cv2.drawContours(img, contours, -1, (0, 0, 1, 0.4), thickness=1) \n\n    ax.imshow(img)",
+    "crumbs": [
+      "Meer weten",
+      "Automatically generating object masks with SAM"
+    ]
+  },
+  {
+    "objectID": "examples/automatic_mask_generator_example.html#example-image",
+    "href": "examples/automatic_mask_generator_example.html#example-image",
+    "title": "Automatically generating object masks with SAM",
+    "section": "Example image",
+    "text": "Example image\n\nimage = Image.open('images/cars.jpg')\nimage = np.array(image.convert(\"RGB\"))\n\n\nplt.figure(figsize=(20, 20))\nplt.imshow(image)\nplt.axis('off')\nplt.show()",
+    "crumbs": [
+      "Meer weten",
+      "Automatically generating object masks with SAM"
+    ]
+  },
+  {
+    "objectID": "examples/automatic_mask_generator_example.html#automatic-mask-generation",
+    "href": "examples/automatic_mask_generator_example.html#automatic-mask-generation",
+    "title": "Automatically generating object masks with SAM",
+    "section": "Automatic mask generation",
+    "text": "Automatic mask generation\nTo run automatic mask generation, provide a version of SAM 2 to the SAM2AutomaticMaskGenerator class. Set the path below to the SAM 2 checkpoint.\n\nfrom sam2.build_sam import build_sam2\nfrom sam2.automatic_mask_generator import SAM2AutomaticMaskGenerator\n\nsam2_checkpoint = \"../checkpoints/sam2_hiera_large.pt\"\nmodel_cfg = \"sam2_hiera_l.yaml\"\n\nsam2 = build_sam2(model_cfg, sam2_checkpoint, device=device, apply_postprocessing=False)\n\nmask_generator = SAM2AutomaticMaskGenerator(sam2)\n\nTo generate masks, just run generate on an image.\n\nmasks = mask_generator.generate(image)\n\nMask generation returns a list over masks, where each mask is a dictionary containing various data about the mask. These keys are: * segmentation : the mask * area : the area of the mask in pixels * bbox : the boundary box of the mask in XYWH format * predicted_iou : the model’s own prediction for the quality of the mask * point_coords : the sampled input point that generated this mask * stability_score : an additional measure of mask quality * crop_box : the crop of the image used to generate this mask in XYWH format\n\nprint(len(masks))\nprint(masks[0].keys())\n\n59\ndict_keys(['segmentation', 'area', 'bbox', 'predicted_iou', 'point_coords', 'stability_score', 'crop_box'])\n\n\nShow all the masks overlayed on the image.\n\nplt.figure(figsize=(20, 20))\nplt.imshow(image)\nshow_anns(masks)\nplt.axis('off')\nplt.show()",
+    "crumbs": [
+      "Meer weten",
+      "Automatically generating object masks with SAM"
+    ]
+  },
+  {
+    "objectID": "examples/automatic_mask_generator_example.html#automatic-mask-generation-options",
+    "href": "examples/automatic_mask_generator_example.html#automatic-mask-generation-options",
+    "title": "Automatically generating object masks with SAM",
+    "section": "Automatic mask generation options",
+    "text": "Automatic mask generation options\nThere are several tunable parameters in automatic mask generation that control how densely points are sampled and what the thresholds are for removing low quality or duplicate masks. Additionally, generation can be automatically run on crops of the image to get improved performance on smaller objects, and post-processing can remove stray pixels and holes. Here is an example configuration that samples more masks:\n\nmask_generator_2 = SAM2AutomaticMaskGenerator(\n    model=sam2,\n    points_per_side=64,\n    points_per_batch=128,\n    pred_iou_thresh=0.7,\n    stability_score_thresh=0.92,\n    stability_score_offset=0.7,\n    crop_n_layers=1,\n    box_nms_thresh=0.7,\n    crop_n_points_downscale_factor=2,\n    min_mask_region_area=25.0,\n    use_m2m=True,\n)\n\n\nmasks2 = mask_generator_2.generate(image)\n\n\nplt.figure(figsize=(20, 20))\nplt.imshow(image)\nshow_anns(masks2)\nplt.axis('off')\nplt.show()",
+    "crumbs": [
+      "Meer weten",
+      "Automatically generating object masks with SAM"
+    ]
+  }
+]
