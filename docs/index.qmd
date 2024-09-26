@@ -1,0 +1,15 @@
+---
+title: "AI Toolbox Waterkeringen"
+abstract: "Geautomatiseerde inspectie met Artificial Intelligence voor waterkeringen"
+format:
+  html:
+    page-layout: custom
+    css: assets/frontpage.css
+---
+
+::: {.custom-content}
+
+[DigiGids 2.0](digigids.qmd){.btn .btn-primary .btn-lg role="button"}
+[Algoritmes](https://github.com/guydup/testscripts){.btn .btn-primary .btn-lg role="button"}
+
+:::

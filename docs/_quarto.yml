@@ -1,0 +1,36 @@
+project:
+  type: website
+
+website:
+  title: "AI Toolbox Waterkeringen"
+  search: false
+  navbar:
+    background: primary
+    title: false
+    left:
+      - icon: house-fill
+        href: "./index.html"
+        aria-label: Home
+    right:
+      - text: "Meer weten"
+        href: more.qmd
+      - text: "Over ons"
+        href: about.qmd
+      - text: "Contact"
+        href: contact.qmd
+  sidebar:
+    # Alleen voor specifieke pagina "Meer weten"
+    - title: "Meer weten"
+      style: "floating"
+      contents:
+        - section: "Meer weten"
+          href: more.qmd
+          contents:
+          - examples/automatic_mask_generator_example.ipynb
+          - examples/image_predictor_example.ipynb
+
+format:
+  html:
+    theme: solar
+    css: assets/styles.css
+    toc: true
