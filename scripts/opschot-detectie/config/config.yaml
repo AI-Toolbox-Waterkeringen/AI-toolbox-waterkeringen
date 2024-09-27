@@ -1,0 +1,36 @@
+hq: False
+model_type: 'vit_b'
+disk_path: './'
+data_path: '${disk_path}/data'
+checkpoint: 'sam_vit_b_01ec64.pth' 
+DEVICE: 'cpu' # 'cuda:1'
+DINO_BOX_THRESHOLD: 0.2
+DINO_TEXT_THRESHOLD: 0.
+DO_IOU_MERGE: True
+IOU_THRESHOLD: 0.5
+dataDir: '${data_path}/supervisely/277426_20230714 MUG Hoorn Enkhuizen orthomosaic deel 6/2023-12-11 12_52_14.810'
+path_tifftiles: '${data_path}/label_data'
+use_fixed_tags: True
+RAM_CHECKPOINT:  '${disk_path}/ram_weights/ram_plus_swin_large_14m.pth'
+RAM_MODELTYPE:  'swin_l'
+GROUNDING_DINO_CONFIG_PATH: 'config/GroundingDINO_SwinB_cfg.py'
+GROUNDING_DINO_CHECKPOINT_PATH: '${disk_path}/dino_weights/groundingdino_swinb_cogcoor.pth'
+USE_SAM_HQ: False
+SAM_ENCODER_VERSION: 'vit_h'
+SAM_CHECKPOINT_PATH: '${disk_path}/sam_weights/sam_vit_h_4b8939.pth'
+SAM_HQ_ENCODER_VERSION: 'vit_h'
+SAM_HQ_CHECKPOINT_PATH: '${disk_path}/sam_weights/sam_hq_vit_h.pth'
+fixed_tags: ["bush","grass","road","shrub","stone","tree","water"]
+
+# preprocessing
+dike_traject_fnames: ['Zetsteen shapefile traject 12-2.shp', 'Zetsteen shapefile traject 13-7.shp']
+dike_traject_havenhoofden_fnames: ['Zetsteen shapefile havendammen.shp']
+tile_overlap_threshold: 0.1
+tile_size_x: 2048
+tile_size_y: 2048
+
+# postprocessing
+
+hydra:
+  run:
+    dir: './'   

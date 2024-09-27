@@ -1,0 +1,38 @@
+[project]
+name = "opschot-detectie"
+description = "Opschot-detectie van houtachtige begroeiing op de steenbekleding van een waterkering"
+version = "1.0.0"
+readme = "README.md"
+authors = [
+    { name = "Joost Stenfert", email = "stenfert@hkv.nl" },
+    { name = "Thomas Stolp", email = "stolp@hkv.nl" },
+    { name = "Guy Dupuits", email = "dupuits@hkv.nl" },
+]
+license = "GPL-3.0-or-later"
+requires-python = ">=3.11"
+dependencies = [
+    "matplotlib",
+    "pandas",
+    "geopandas",
+    "shapely",
+    "pdal==2.6.2",
+    "pycocotools",
+    "ipykernel",
+    "pytorch",
+    "torchvision",
+    "torchaudio",
+    "pytorch-cuda==11.8",
+    "ca-certificates",
+    "certifi",
+    "openssl",
+    "ipywidgets",
+    "python-pdal",
+    "scikit-image",
+    "rasterio",
+    "hydra-core",
+    "mercantile",
+    "bs4",
+    "pdal_wrench",
+    "colorlog",
+    "yapf",
+]
