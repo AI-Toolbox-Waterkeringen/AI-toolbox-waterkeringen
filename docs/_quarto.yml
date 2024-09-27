@@ -1,6 +1,15 @@
 project:
   type: website
 
+format:
+  html:
+    theme:
+      light: united
+      dark: superhero
+    css: assets/styles.css
+    toc: true
+    code-fold: true
+
 website:
   title: "AI Toolbox Waterkeringen"
   search: false
@@ -23,14 +32,9 @@ website:
     - title: "Meer weten"
       style: "floating"
       contents:
-        - section: "Meer weten"
+        - section: "Meer over de AI Toolbox"
           href: more.qmd
           contents:
-          - examples/automatic_mask_generator_example.ipynb
-          - examples/image_predictor_example.ipynb
-
-format:
-  html:
-    theme: solar
-    css: assets/styles.css
-    toc: true
+          - examples/opschotdetectie_voorbeeld.ipynb
+  page-footer: |
+    ![HKV](/assets/hkv.png) &emsp; ![STOWA](/assets/stowa.png) &emsp; ![HHNK](/assets/hhnk.png)

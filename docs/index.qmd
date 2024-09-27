@@ -10,6 +10,6 @@ format:
 ::: {.custom-content}
 
 [DigiGids 2.0](digigids.qmd){.btn .btn-primary .btn-lg role="button"}
-[Algoritmes](https://github.com/guydup/testscripts){.btn .btn-primary .btn-lg role="button"}
+[Algoritmes](https://github.com/AI-Toolbox-Waterkeringen/AI-toolbox-waterkeringen){.btn .btn-primary .btn-lg role="button"}
 
 :::

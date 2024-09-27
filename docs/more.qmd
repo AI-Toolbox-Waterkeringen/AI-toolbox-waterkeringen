@@ -1,5 +1,7 @@
 ---
-title: "Meer weten"
+title: "Meer over de AI Toolbox"
 ---
 
-Placeholder.
+Op deze pagina zijn voorbeeldtoepassingen te vinden van scripts in de AI Toolbox Waterkeringen. Deze voorbeelden zijn bedoeld om snel een overzicht te geven wat elk script kan en wat nodig is om een script te draaien. De voorbeelden zijn Jupyter notebooks met echte code toepassingen en dus ook reproduceerbaar.
+
+Het linkermenu bevat alle links naar de voorbeelden.
