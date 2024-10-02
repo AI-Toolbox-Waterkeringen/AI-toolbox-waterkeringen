@@ -37,4 +37,4 @@ website:
           contents:
           - examples/opschotdetectie_voorbeeld.ipynb
   page-footer: |
-    ![HKV](/assets/hkv.png) &emsp; ![STOWA](/assets/stowa.png) &emsp; ![HHNK](/assets/hhnk.png)
+    ![HKV](/assets/hkv.png) ![STOWA](/assets/stowa.png) ![HHNK](/assets/hhnk.png)
