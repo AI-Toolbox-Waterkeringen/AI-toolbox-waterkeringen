@@ -1,3 +1,5 @@
 footer .img-fluid {
-    max-width: 30%;
+    max-width: 46%;
+    margin: 1%;
+    max-height: 70px;
 }
