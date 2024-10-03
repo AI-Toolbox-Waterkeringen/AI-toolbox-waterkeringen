@@ -37,4 +37,11 @@ website:
           contents:
           - examples/opschotdetectie_voorbeeld.ipynb
   page-footer: |
-    ![HKV](/assets/hkv.png) ![STOWA](/assets/stowa.png) ![HHNK](/assets/hhnk.png)
+    <div>
+      ![Stichting Toegepast Onderzoek Waterbeheer](/assets/stowa.png) 
+      ![Rijkswaterstaat Ministerie van Infrastructuur en Waterstaat](/assets/rws.png) 
+    </div>
+    <div>
+      ![Hoogheemraadschap Hollands Noorderkwartier](/assets/hhnk.jpg) 
+      ![HKV lijn in water](/assets/hkv.png)
+    </div>
