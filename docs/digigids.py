@@ -1,4 +1,5 @@
 import os
+import string
 from azure.storage.blob import BlobServiceClient
 
 if __name__ == "__main__":
@@ -22,16 +23,11 @@ if __name__ == "__main__":
         digigids_markdown.append("| {Error connecting to storage...} |")
 
     # Read original file line by line
-    lines = []
     with open("docs/digigids.qmd", "r") as fid:
-        lines = fid.readlines()
+        src = string.Template(fid.read())
 
-    # Replace placeholder text
-    for i, line in enumerate(lines):
-        if "[placeholder]" in line:
-            lines[i] = line.replace("[placeholder]", "\n".join(digigids_markdown))
-
-    # Write modified file
+    # Replace placeholder text and write file
     with open("docs/digigids.qmd", "w") as fid:
-        for line in lines:
-            fid.write(f"{line}\n")
+        digigids_markdown = "\n".join(digigids_markdown)
+        dst = src.substitute(placeholder=digigids_markdown)
+        fid.write(dst)

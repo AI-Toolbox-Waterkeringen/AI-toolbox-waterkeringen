@@ -2,4 +2,4 @@
 title: "DigiGids 2.0"
 ---
 
-[placeholder]
+$placeholder
