@@ -20,7 +20,7 @@ if __name__ == "__main__":
         for blob in blob_list:
             digigids_markdown.append(f"| {blob.name} |")
     except Exception:
-        digigids_markdown.append("| {Error connecting to storage...} |")
+        digigids_markdown.append("| Error connecting to storage... |")
 
     # Read original file line by line
     with open("docs/digigids.qmd", "r") as fid:
