@@ -41,7 +41,13 @@ jobs:
         uses: actions/setup-python@v5
         with:
             python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
-      - run: pip install jupyter
+      - run: pip install jupyter azure-storage-blob
+
+      - name: Run Python digigids script
+        env:
+          AZURE_SAS: ${{ secrets.AZURE_SAS }}
+          AZURE_CONTAINER: ${{ secrets.AZURE_CONTAINER }}
+        run: python docs/digigids.py
 
       # Publish to GitHub Pages
       # NOTE: If Publishing to GitHub Pages, set the permissions correctly (see top of this yaml)
