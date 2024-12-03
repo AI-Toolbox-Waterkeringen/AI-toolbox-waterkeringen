@@ -1,30 +1,5 @@
 [
   {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Over ons",
-    "section": "",
-    "text": "Waterschappen inspecteren jaarlijks vele duizenden kilometers waterkeringen. Om inzicht te krijgen in actuele sterkte van waterkeringen wordt het steeds belangrijker om te kijken naar verschillen in conditie ten opzichte van de uitgangspunten van de toetsing en beoordeling. Dit soort inspecties zijn arbeidsintensief. Beheerders geven aan dat het handmatig vastleggen van schadebeelden en het verwerken van inspecties zeer veel tijd kost.\nDaarnaast zien we in sectoren om ons heen dat ontwikkelingen rondom AI steeds sneller gaan en ook gebruikt worden in de praktijk. Ook binnen de watersector werken waterschappen en adviesbureaus aan nieuwe toepassingen voor AI (bijvoorbeeld vanuit het DEEP programma). Zo heeft Hoogheemraadschap Hollands Noorderkwartier (HHNK) enkele jaren geleden het voortouw genomen om te starten met AI ontwikkelingen voor inspectie van waterkeringen.\nVervolgens is de behoefte ontstaan om meerdere use cases uit te gaan werken en dit vervolgens te bundelen. Dit heeft geleid tot de ambitie om met geïnteresseerde waterschappen een AI Toolbox voor waterkeringen te ontwikkelen."
-  },
-  {
-    "objectID": "more.html",
-    "href": "more.html",
-    "title": "Meer over de AI Toolbox",
-    "section": "",
-    "text": "Op deze pagina zijn voorbeeldtoepassingen te vinden van scripts in de AI Toolbox Waterkeringen. Deze voorbeelden zijn bedoeld om snel een overzicht te geven wat elk script kan en wat nodig is om een script te draaien. De voorbeelden zijn Jupyter notebooks met echte code toepassingen en dus ook reproduceerbaar.\nHet linkermenu bevat alle links naar de voorbeelden.",
-    "crumbs": [
-      "Meer weten",
-      "Meer over de AI Toolbox"
-    ]
-  },
-  {
-    "objectID": "digigids.html",
-    "href": "digigids.html",
-    "title": "DigiGids 2.0",
-    "section": "",
-    "text": "Item\n\n\n\n\nError connecting to storage…"
-  },
-  {
     "objectID": "contact.html",
     "href": "contact.html",
     "title": "Contact",
@@ -90,5 +65,30 @@
       "Meer over de AI Toolbox",
       "Opschotdetectie"
     ]
+  },
+  {
+    "objectID": "digigids.html",
+    "href": "digigids.html",
+    "title": "DigiGids 2.0",
+    "section": "",
+    "text": "Item\n\n\n\n\nError connecting to storage…"
+  },
+  {
+    "objectID": "more.html",
+    "href": "more.html",
+    "title": "Meer over de AI Toolbox",
+    "section": "",
+    "text": "Op deze pagina zijn voorbeeldtoepassingen te vinden van scripts in de AI Toolbox Waterkeringen. Deze voorbeelden zijn bedoeld om snel een overzicht te geven wat elk script kan en wat nodig is om een script te draaien. De voorbeelden zijn Jupyter notebooks met echte code toepassingen en dus ook reproduceerbaar.\nHet linkermenu bevat alle links naar de voorbeelden.",
+    "crumbs": [
+      "Meer weten",
+      "Meer over de AI Toolbox"
+    ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Over ons",
+    "section": "",
+    "text": "Waterschappen inspecteren jaarlijks vele duizenden kilometers waterkeringen. Om inzicht te krijgen in actuele sterkte van waterkeringen wordt het steeds belangrijker om te kijken naar verschillen in conditie ten opzichte van de uitgangspunten van de toetsing en beoordeling. Dit soort inspecties zijn arbeidsintensief. Beheerders geven aan dat het handmatig vastleggen van schadebeelden en het verwerken van inspecties zeer veel tijd kost.\nDaarnaast zien we in sectoren om ons heen dat ontwikkelingen rondom AI steeds sneller gaan en ook gebruikt worden in de praktijk. Ook binnen de watersector werken waterschappen en adviesbureaus aan nieuwe toepassingen voor AI (bijvoorbeeld vanuit het DEEP programma). Zo heeft Hoogheemraadschap Hollands Noorderkwartier (HHNK) enkele jaren geleden het voortouw genomen om te starten met AI ontwikkelingen voor inspectie van waterkeringen.\nVervolgens is de behoefte ontstaan om meerdere use cases uit te gaan werken en dit vervolgens te bundelen. Dit heeft geleid tot de ambitie om met geïnteresseerde waterschappen een AI Toolbox voor waterkeringen te ontwikkelen."
   }
 ]
