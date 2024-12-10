@@ -1,6 +1,40 @@
 import os
 import string
-from azure.storage.blob import BlobServiceClient
+from azure.storage.blob import BlobServiceClient, ContainerClient, BlobPrefix
+
+
+def list_blobs_hierarchical(
+    container_client: ContainerClient,
+    folder_entries,
+    indent="    ",
+    delimiter="/",
+    prefix="",
+    depth=0,
+):
+    for blob in container_client.walk_blobs(
+        name_starts_with=prefix, delimiter=delimiter
+    ):
+        if isinstance(blob, BlobPrefix):
+            if depth <= 1:
+                # Indentation is only added to show nesting in the output
+                folder_entries.append(f"| {indent * depth}{blob.name} |")
+                depth += 1
+                depth, folder_entries = list_blobs_hierarchical(
+                    container_client,
+                    folder_entries,
+                    indent=indent,
+                    delimiter=delimiter,
+                    prefix=blob.name,
+                    depth=depth,
+                )
+                depth -= 1
+            else:
+                break
+        else:
+            continue
+
+    return depth, folder_entries
+
 
 if __name__ == "__main__":
     # Get connection info from environment variables
@@ -16,9 +50,8 @@ if __name__ == "__main__":
         # List the blobs in the container
         blob_service_client = BlobServiceClient(account_url=connect_str)
         container_client = blob_service_client.get_container_client(container_name)
-        blob_list = container_client.list_blobs()
-        for blob in blob_list:
-            digigids_markdown.append(f"| {blob.name} |")
+        _, folder_entries = list_blobs_hierarchical(container_client, [])
+        digigids_markdown += folder_entries
     except Exception:
         digigids_markdown.append("| Error connecting to storage... |")
 
