@@ -6,7 +6,7 @@ from azure.storage.blob import BlobServiceClient, ContainerClient, BlobPrefix
 def list_blobs_hierarchical(
     container_client: ContainerClient,
     folder_entries,
-    indent="    ",
+    indent="&nbsp;&nbsp;&nbsp;&nbsp;",
     delimiter="/",
     prefix="",
     depth=0,
