@@ -9,7 +9,7 @@ if __name__ == "__main__":
 
     # Initialize markdown table
     digigids_markdown = []
-    digigids_markdown.append("| Item              |")
+    digigids_markdown.append("| Naam              |")
     digigids_markdown.append("| :---------------- |")
 
     try:
