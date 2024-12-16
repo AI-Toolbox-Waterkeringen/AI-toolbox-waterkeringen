@@ -4,7 +4,32 @@
     "href": "contact.html",
     "title": "Contact",
     "section": "",
-    "text": "Placeholder."
+    "text": "Dit is een open ontwikkeling. Alle algoritmes zijn open source beschikbaar en we streven ernaar om de data science community in de watersector hiermee te enthousiasmeren, te stimuleren en te motiveren om samen met ons nieuwe algoritmes te ontwikkelen.\nWil je meewerken aan nieuwe ontwikkelingen, wil je toegang krijgen tot de trainingsdata (of wil je trainingsdata toevoegen), of heb je algemene vragen: neem dan contact met ons op via aitoolboxwaterkeringen@hkv.nl.\nVoor meer informatie neem contact op met: - Guy Dupuits – inhoudelijk expert op waterkeringen en AI algoritmes (dupuits@hkv.nl) - Erik Vastenburg – waterveiligheidsadviseur bij HHNK (e.vastenburg@hhnk.nl)"
+  },
+  {
+    "objectID": "digigids.html",
+    "href": "digigids.html",
+    "title": "DigiGids 2.0",
+    "section": "",
+    "text": "In de Digigids 2.0 staat alle trainingsdata die ten grondslag ligt aan de ontwikkelde algoritmes. Om algoritmes door te ontwikkelen vinden wij het belangrijk dat je gebruik kunt maken van de originele gemarkeerde en gelabelde data. Het is mogelijk eigen databronnen toe te voegen. Omdat we in de opstartfase zitten is dit niet geautomatiseerd. Wil je deze data gebruiken of data toevoegen? Neem contact met ons op.\nIn onderstaande tabel zijn de eerste twee niveaus van de mappen in de opslag.\n\n\n\nNaam\n\n\n\n\nopschot-detectie/\n\n\n    opschot-detectie/supervisely/\n\n\nscheurdetectie/\n\n\n    scheurdetectie/ilpendam/\n\n\n    scheurdetectie/jisp/"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Over ons",
+    "section": "",
+    "text": "Dit is een initiatief van HHNK, STOWA en HKV. We denken hiermee beheer en onderhoud van waterkeringen efficiënter en effectiever te maken.\nWaterschappen inspecteren jaarlijks vele duizenden kilometers waterkeringen. Om inzicht te krijgen in actuele sterkte van waterkeringen wordt het steeds belangrijker om te kijken naar verschillen in conditie ten opzichte van de uitgangspunten van de toetsing en beoordeling. Dit soort inspecties zijn arbeidsintensief. Beheerders geven aan dat het handmatig vastleggen van schadebeelden en het verwerken van inspecties zeer veel tijd kost. Onze algoritmes bieden daarvoor een oplossing door consequent foto’s te vertalen naar informatie over degradatie, schadebeelden en veranderingen.\nDe AI toolbox is een open ontwikkeling. Heb je vragen of wil je meewerken aan nieuwe ontwikkelingen, neem dan contact met ons op."
+  },
+  {
+    "objectID": "more.html",
+    "href": "more.html",
+    "title": "Meer over de AI Toolbox",
+    "section": "",
+    "text": "De AI Toolbox is ontwikkeld voor data scientists bij waterschappen. Heeft u algemene vragen over de toolbox die niet technisch van aard zijn, neem dan contact met ons op.\nOp deze pagina zijn voorbeelden te vinden van scripts in de AI Toolbox Waterkeringen. Klik links op een voorbeeld. Daarmee krijgt een een overzicht van wat een algoritme kan en hoe het te gebruiken is. De voorbeelden zijn gemaakt in Jupyter Notebooks en zijn ook reproduceerbaar.\nHet linkermenu bevat alle links naar de voorbeelden.",
+    "crumbs": [
+      "Meer weten",
+      "Meer over de AI Toolbox"
+    ]
   },
   {
     "objectID": "examples/opschotdetectie_voorbeeld.html",
@@ -65,30 +90,5 @@
       "Meer over de AI Toolbox",
       "Opschotdetectie"
     ]
-  },
-  {
-    "objectID": "digigids.html",
-    "href": "digigids.html",
-    "title": "DigiGids 2.0",
-    "section": "",
-    "text": "Naam\n\n\n\n\nopschot-detectie/\n\n\n    opschot-detectie/supervisely/\n\n\nscheurdetectie/\n\n\n    scheurdetectie/ilpendam/\n\n\n    scheurdetectie/jisp/"
-  },
-  {
-    "objectID": "more.html",
-    "href": "more.html",
-    "title": "Meer over de AI Toolbox",
-    "section": "",
-    "text": "Op deze pagina zijn voorbeeldtoepassingen te vinden van scripts in de AI Toolbox Waterkeringen. Deze voorbeelden zijn bedoeld om snel een overzicht te geven wat elk script kan en wat nodig is om een script te draaien. De voorbeelden zijn Jupyter notebooks met echte code toepassingen en dus ook reproduceerbaar.\nHet linkermenu bevat alle links naar de voorbeelden.",
-    "crumbs": [
-      "Meer weten",
-      "Meer over de AI Toolbox"
-    ]
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Over ons",
-    "section": "",
-    "text": "Waterschappen inspecteren jaarlijks vele duizenden kilometers waterkeringen. Om inzicht te krijgen in actuele sterkte van waterkeringen wordt het steeds belangrijker om te kijken naar verschillen in conditie ten opzichte van de uitgangspunten van de toetsing en beoordeling. Dit soort inspecties zijn arbeidsintensief. Beheerders geven aan dat het handmatig vastleggen van schadebeelden en het verwerken van inspecties zeer veel tijd kost.\nDaarnaast zien we in sectoren om ons heen dat ontwikkelingen rondom AI steeds sneller gaan en ook gebruikt worden in de praktijk. Ook binnen de watersector werken waterschappen en adviesbureaus aan nieuwe toepassingen voor AI (bijvoorbeeld vanuit het DEEP programma). Zo heeft Hoogheemraadschap Hollands Noorderkwartier (HHNK) enkele jaren geleden het voortouw genomen om te starten met AI ontwikkelingen voor inspectie van waterkeringen.\nVervolgens is de behoefte ontstaan om meerdere use cases uit te gaan werken en dit vervolgens te bundelen. Dit heeft geleid tot de ambitie om met geïnteresseerde waterschappen een AI Toolbox voor waterkeringen te ontwikkelen."
   }
 ]
