@@ -2,6 +2,8 @@
 title: "Meer over de AI Toolbox"
 ---
 
-Op deze pagina zijn voorbeeldtoepassingen te vinden van scripts in de AI Toolbox Waterkeringen. Deze voorbeelden zijn bedoeld om snel een overzicht te geven wat elk script kan en wat nodig is om een script te draaien. De voorbeelden zijn Jupyter notebooks met echte code toepassingen en dus ook reproduceerbaar.
+De AI Toolbox is ontwikkeld voor data scientists bij waterschappen. Heeft u algemene vragen over de toolbox die niet technisch van aard zijn, [neem dan contact met ons op](contact.qmd).
+
+Op deze pagina zijn voorbeelden te vinden van scripts in de AI Toolbox Waterkeringen. Klik links op een voorbeeld. Daarmee krijgt een een overzicht van wat een algoritme kan en hoe het te gebruiken is. De voorbeelden zijn gemaakt in Jupyter Notebooks en zijn ook reproduceerbaar.
 
 Het linkermenu bevat alle links naar de voorbeelden.

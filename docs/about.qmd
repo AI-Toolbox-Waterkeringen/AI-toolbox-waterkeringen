@@ -2,8 +2,8 @@
 title: "Over ons"
 ---
 
-Waterschappen inspecteren jaarlijks vele duizenden kilometers waterkeringen. Om inzicht te krijgen in actuele sterkte van waterkeringen wordt het steeds belangrijker om te kijken naar verschillen in conditie ten opzichte van de uitgangspunten van de toetsing en beoordeling. Dit soort inspecties zijn arbeidsintensief. Beheerders geven aan dat het handmatig vastleggen van schadebeelden en het verwerken van inspecties zeer veel tijd kost.
+Dit is een initiatief van HHNK, STOWA en HKV. We denken hiermee beheer en onderhoud van waterkeringen efficiënter en effectiever te maken.
 
-Daarnaast zien we in sectoren om ons heen dat ontwikkelingen rondom AI steeds sneller gaan en ook gebruikt worden in de praktijk. Ook binnen de watersector werken waterschappen en adviesbureaus aan nieuwe toepassingen voor AI (bijvoorbeeld vanuit het DEEP programma). Zo heeft Hoogheemraadschap Hollands Noorderkwartier (HHNK) enkele jaren geleden het voortouw genomen om te starten met AI ontwikkelingen voor inspectie van waterkeringen.
+Waterschappen inspecteren jaarlijks vele duizenden kilometers waterkeringen. Om inzicht te krijgen in actuele sterkte van waterkeringen wordt het steeds belangrijker om te kijken naar verschillen in conditie ten opzichte van de uitgangspunten van de toetsing en beoordeling. Dit soort inspecties zijn arbeidsintensief. Beheerders geven aan dat het handmatig vastleggen van schadebeelden en het verwerken van inspecties zeer veel tijd kost. Onze algoritmes bieden daarvoor een oplossing door consequent foto’s te vertalen naar informatie over degradatie, schadebeelden en veranderingen.
 
-Vervolgens is de behoefte ontstaan om meerdere use cases uit te gaan werken en dit vervolgens te bundelen. Dit heeft geleid tot de ambitie om met geïnteresseerde waterschappen een AI Toolbox voor waterkeringen te ontwikkelen.
+De AI toolbox is een open ontwikkeling. Heb je vragen of wil je meewerken aan nieuwe ontwikkelingen, [neem dan contact met ons op](contact.qmd).
