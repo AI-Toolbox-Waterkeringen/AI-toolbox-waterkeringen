@@ -1,0 +1,9 @@
+---
+title: "Trainingsdata"
+---
+
+In de trainingsdata staat alle data die ten grondslag ligt aan de ontwikkelde algoritmes. Om algoritmes door te ontwikkelen vinden wij het belangrijk dat je gebruik kunt maken van de originele gemarkeerde en gelabelde data. Het is mogelijk eigen databronnen toe te voegen. Omdat we in de opstartfase zitten is dit niet geautomatiseerd. Wil je deze data gebruiken of data toevoegen? [Neem contact met ons op](contact.qmd).
+
+In onderstaande tabel zijn de eerste twee niveaus van de mappen in de opslag te zien.
+
+$placeholder
