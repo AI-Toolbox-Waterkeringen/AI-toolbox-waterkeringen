@@ -7,20 +7,6 @@
     "text": "Dit is een open ontwikkeling. Alle algoritmes zijn open source beschikbaar en we streven ernaar om de data science community in de watersector hiermee te enthousiasmeren, te stimuleren en te motiveren om samen met ons nieuwe algoritmes te ontwikkelen.\nWil je meewerken aan nieuwe ontwikkelingen, wil je toegang krijgen tot de trainingsdata (of wil je trainingsdata toevoegen), of heb je algemene vragen: neem dan contact met ons op via aitoolboxwaterkeringen@hkv.nl.\nVoor meer informatie neem contact op met:\n\nGuy Dupuits – inhoudelijk expert op waterkeringen en AI algoritmes (dupuits@hkv.nl)\nErik Vastenburg – waterveiligheidsadviseur bij HHNK (e.vastenburg@hhnk.nl)"
   },
   {
-    "objectID": "digigids.html",
-    "href": "digigids.html",
-    "title": "DigiGids 2.0",
-    "section": "",
-    "text": "In de Digigids 2.0 staat alle trainingsdata die ten grondslag ligt aan de ontwikkelde algoritmes. Om algoritmes door te ontwikkelen vinden wij het belangrijk dat je gebruik kunt maken van de originele gemarkeerde en gelabelde data. Het is mogelijk eigen databronnen toe te voegen. Omdat we in de opstartfase zitten is dit niet geautomatiseerd. Wil je deze data gebruiken of data toevoegen? Neem contact met ons op.\nIn onderstaande tabel zijn de eerste twee niveaus van de mappen in de opslag.\n\n\n\nNaam\n\n\n\n\nopschot-detectie/\n\n\n    opschot-detectie/supervisely/\n\n\nscheurdetectie/\n\n\n    scheurdetectie/ilpendam/\n\n\n    scheurdetectie/jisp/"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Over ons",
-    "section": "",
-    "text": "Dit is een initiatief van HHNK, het PIW-programma van STOWA en RWS-WVL en HKV. We willen hiermee beheer en onderhoud van waterkeringen efficiënter en effectiever maken.\nWaterschappen inspecteren jaarlijks vele duizenden kilometers waterkeringen. Om inzicht te krijgen in actuele sterkte van waterkeringen wordt het steeds belangrijker om te kijken naar verschillen in conditie ten opzichte van de uitgangspunten van de toetsing en beoordeling. Dit soort inspecties zijn arbeidsintensief. Beheerders geven aan dat het handmatig vastleggen van schadebeelden en het verwerken van inspecties zeer veel tijd kost. Onze algoritmes bieden daarvoor een oplossing door consequent foto’s te vertalen naar informatie over degradatie, schadebeelden en veranderingen.\nDe AI toolbox is een open ontwikkeling. Heb je vragen of wil je meewerken aan nieuwe ontwikkelingen, neem dan contact met ons op."
-  },
-  {
     "objectID": "more.html",
     "href": "more.html",
     "title": "Meer over de AI Toolbox",
@@ -30,6 +16,20 @@
       "Meer weten",
       "Meer over de AI Toolbox"
     ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Over ons",
+    "section": "",
+    "text": "Dit is een initiatief van HHNK, het PIW-programma van STOWA en RWS-WVL en HKV. We willen hiermee beheer en onderhoud van waterkeringen efficiënter en effectiever maken.\nWaterschappen inspecteren jaarlijks vele duizenden kilometers waterkeringen. Om inzicht te krijgen in actuele sterkte van waterkeringen wordt het steeds belangrijker om te kijken naar verschillen in conditie ten opzichte van de uitgangspunten van de toetsing en beoordeling. Dit soort inspecties zijn arbeidsintensief. Beheerders geven aan dat het handmatig vastleggen van schadebeelden en het verwerken van inspecties zeer veel tijd kost. Onze algoritmes bieden daarvoor een oplossing door consequent foto’s te vertalen naar informatie over degradatie, schadebeelden en veranderingen.\nDe AI toolbox is een open ontwikkeling. Heb je vragen of wil je meewerken aan nieuwe ontwikkelingen, neem dan contact met ons op."
+  },
+  {
+    "objectID": "data.html",
+    "href": "data.html",
+    "title": "Trainingsdata",
+    "section": "",
+    "text": "In de trainingsdata staat alle data die ten grondslag ligt aan de ontwikkelde algoritmes. Om algoritmes door te ontwikkelen vinden wij het belangrijk dat je gebruik kunt maken van de originele gemarkeerde en gelabelde data. Het is mogelijk eigen databronnen toe te voegen. Omdat we in de opstartfase zitten is dit niet geautomatiseerd. Wil je deze data gebruiken of data toevoegen? Neem contact met ons op.\nIn onderstaande tabel zijn de eerste twee niveaus van de mappen in de opslag te zien.\n\n\n\nNaam\n\n\n\n\nopschot-detectie/\n\n\n    opschot-detectie/supervisely/\n\n\nscheurdetectie/\n\n\n    scheurdetectie/ilpendam/\n\n\n    scheurdetectie/jisp/"
   },
   {
     "objectID": "examples/opschotdetectie_voorbeeld.html",
