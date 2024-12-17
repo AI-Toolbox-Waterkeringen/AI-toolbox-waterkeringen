@@ -9,7 +9,7 @@ format:
 
 ::: {.custom-content}
 
-[Trainingsdata](digigids.qmd){.btn .btn-primary .btn-lg role="button"}
+[Trainingsdata](data.qmd){.btn .btn-primary .btn-lg role="button"}
 [Algoritmes](https://github.com/AI-Toolbox-Waterkeringen/AI-toolbox-waterkeringen){.btn .btn-primary .btn-lg role="button" target="_blank"}
 
 :::
