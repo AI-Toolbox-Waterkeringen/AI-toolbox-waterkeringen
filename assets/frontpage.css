@@ -1,3 +1,37 @@
+.wrap {
+    margin: 0 10rem;
+}
+.glide__slide {
+    /* border: 1px solid black; */
+    height: 11rem;
+    margin: 0;
+    text-align: center;
+    position: relative;
+}
+
+.glide__slide img {
+    height: 11rem;
+    width: 100%;
+    object-fit: cover !important;
+    display: block;
+}
+
+.glide__slide h4 {
+    position: absolute;
+    right: 15%;
+    bottom: 1.25rem;
+    left: 15%;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    color: #fff;
+    text-shadow: black 1px 0 3px;
+    text-align: center;
+}
+
+.glide__bullet {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
 .page-layout-custom {
     display: grid;
     align-items: center;
