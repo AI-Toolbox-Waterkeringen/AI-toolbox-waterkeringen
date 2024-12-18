@@ -5,7 +5,36 @@ format:
   html:
     page-layout: custom
     css: assets/frontpage.css
+include-in-header: 
+   - text: <script src="assets/glide.min.js" type="application/javascript"></script>
+   - text: <link rel="stylesheet" href="assets/glide.core.css">
+   - text: <link rel="stylesheet" href="assets/glide.theme.css">
+include-after-body:
+   - text: <script src="assets/glide.js" type="application/javascript"></script>
 ---
+
+```{=html}
+<div class="wrap">
+   <div class="glide">
+    <div class="glide__track" data-glide-el="track">
+      <ul class="glide__slides">
+        <li class="glide__slide">
+          <h4>Scheurdetectie</h4>
+          <img src="assets/scheurdetectie_carousel.jpg" alt="Scheurdetectie">
+        </li>
+        <li class="glide__slide">
+          <h4>Opschotdetectie</h4>
+          <a href="examples/opschotdetectie_voorbeeld.html"><img src="assets/opschotdetectie_carousel.jpg" alt="Opschotdetectie"></a>
+        </li>
+      </ul>
+    </div>
+  <div class="glide__bullets" data-glide-el="controls[nav]">
+    <button class="glide__bullet" data-glide-dir="=0"></button>
+    <button class="glide__bullet" data-glide-dir="=1"></button>
+  </div>
+  </div>
+</div>
+```
 
 ::: {.custom-content}
 
