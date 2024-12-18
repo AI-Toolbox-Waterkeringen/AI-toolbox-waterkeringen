@@ -1,5 +1,8 @@
-.wrap {
-    margin: 0 10rem;
+.glide__wrap {
+    margin: 0 auto;
+    max-width: 75%;
+    min-width: 22rem;
+    padding: 1rem 0;
 }
 .glide__slide {
     /* border: 1px solid black; */
@@ -11,6 +14,7 @@
 
 .glide__slide img {
     height: 11rem;
+    min-width: 11rem;
     width: 100%;
     object-fit: cover !important;
     display: block;
