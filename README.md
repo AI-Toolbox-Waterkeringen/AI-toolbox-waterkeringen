@@ -1,1 +1,7 @@
 # AI-toolbox-waterkeringen
+
+Dit is een initiatief van HHNK, het PIW-programma van STOWA en RWS-WVL en HKV. We willen hiermee beheer en onderhoud van waterkeringen efficiënter en effectiever maken.
+
+Waterschappen inspecteren jaarlijks vele duizenden kilometers waterkeringen. Om inzicht te krijgen in actuele sterkte van waterkeringen wordt het steeds belangrijker om te kijken naar verschillen in conditie ten opzichte van de uitgangspunten van de toetsing en beoordeling. Dit soort inspecties zijn arbeidsintensief. Beheerders geven aan dat het handmatig vastleggen van schadebeelden en het verwerken van inspecties zeer veel tijd kost. Onze algoritmes bieden daarvoor een oplossing door consequent foto’s te vertalen naar informatie over degradatie, schadebeelden en veranderingen.
+
+De AI toolbox is een open ontwikkeling. Heb je vragen of wil je meewerken aan nieuwe ontwikkelingen, neem dan contact met ons op.
