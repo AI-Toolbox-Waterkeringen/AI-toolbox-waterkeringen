@@ -20,7 +20,7 @@ include-after-body:
       <ul class="glide__slides">
         <li class="glide__slide">
           <h4>Scheurdetectie</h4>
-          <img src="assets/scheurdetectie_carousel.jpg" alt="Scheurdetectie">
+          <a href="examples/scheurdetectie_voorbeeld.html"><img src="assets/scheurdetectie_carousel.jpg" alt="Scheurdetectie"></a>
         </li>
         <li class="glide__slide">
           <h4>Opschotdetectie</h4>

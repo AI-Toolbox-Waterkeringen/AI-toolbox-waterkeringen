@@ -39,6 +39,7 @@ website:
           href: more.qmd
           contents:
           - examples/opschotdetectie_voorbeeld.ipynb
+          - examples/scheurdetectie_voorbeeld.ipynb
   page-footer: |
     <div>
       ![Stichting Toegepast Onderzoek Waterbeheer](/assets/stowa.png) 
