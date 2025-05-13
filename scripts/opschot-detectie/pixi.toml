@@ -9,7 +9,7 @@ license = "GPL-3.0"
 license-file = "LICENSE"
 
 [dependencies]
-python = ">=3.11,<3.13"
+python = "==3.11"
 pip = "*"
 pdal = "*"
 pdal_wrench = "*"
@@ -33,6 +33,7 @@ yapf = "*"
 tqdm = "*"
 pillow = "*"
 rasterio = "*"
+open3d = "*"
 torch = { version = ">=2.2", index = "https://download.pytorch.org/whl/cu118" }
 torchvision = { version = ">=0.17", index = "https://download.pytorch.org/whl/cu118" }
 segment-anything = "*"
