@@ -7,6 +7,6 @@ Deze repository bevat een oplossing voor het detecteren van opschot op de steenb
 ## Installatie
 
 ```bash
-    conda env create --name opschotdetectie --file=environments.yml
+    pixi install
 ```
 
