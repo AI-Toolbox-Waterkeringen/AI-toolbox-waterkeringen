@@ -1,14 +1,17 @@
-# Use a Python 3.10 image based on Debian Bookworm as your base image
-FROM python:3.10-bookworm
+FROM debian:bookworm-slim
 
-# Update the package list and install GDAL's dependencies
-RUN apt-get update && apt-get install -y \
-    libgdal-dev \
-    gdal-bin
+# Stel de werkdirectory in
+WORKDIR /code
 
-# Set environment variables to ensure that the Python GDAL bindings
-# can find and use the GDAL installation
-ENV GDAL_CONFIG=/usr/bin/gdal-config
-# ENV GDAL_VERSION=$(gdal-config --version)
+# Kopieer alle files naar de werkdirectory
+COPY .vscode/ /code/.vscode/
+COPY src/ /code/src/
+COPY .gitignore /code/.gitignore
+COPY LICENSE /code/LICENSE
+COPY pixi.lock /code/pixi.lock
+COPY pixi.toml /code/pixi.toml
+COPY README.md /code/README.md
 
-# Your existing Dockerfile instructions follow...
+RUN apt-get -y update
+RUN apt-get -y install git curl
+RUN curl -fsSL https://pixi.sh/install.sh | bash
