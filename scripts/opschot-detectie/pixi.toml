@@ -1,0 +1,45 @@
+[project]
+name = "opschot-detectie"
+description = "Opschot-detectie van houtachtige begroeiing op de steenbekleding van een waterkering"
+version = "1.0.0"
+channels = ["conda-forge"]
+platforms = ["linux-64", "win-64"]
+readme = "README.md"
+license = "GPL-3.0"
+license-file = "LICENSE"
+
+[dependencies]
+python = ">=3.11,<3.13"
+pip = "*"
+pdal = "*"
+pdal_wrench = "*"
+python-pdal = "*"
+
+[pypi-dependencies]
+matplotlib = "*"
+pandas = "*"
+geopandas = "*"
+shapely = "*"
+pycocotools = "*"
+jupyterlab = "*"
+ipykernel = "*"
+ipywidgets = "*"
+scikit-image = "*"
+hydra-core = "*"
+mercantile = "*"
+bs4 = "*"
+colorlog = "*"
+yapf = "*"
+tqdm = "*"
+pillow = "*"
+rasterio = "*"
+torch = { version = ">=2.2", index = "https://download.pytorch.org/whl/cu118" }
+torchvision = { version = ">=0.17", index = "https://download.pytorch.org/whl/cu118" }
+segment-anything = "*"
+segment-anything-hq = "*"
+groundingdino-py = "*"
+opschot_detectie = { path = "src", editable = true }
+
+[target.win.pypi-dependencies]
+torch = { version = ">=2.2", index = "https://download.pytorch.org/whl/cpu" }
+torchvision = { version = ">=0.17", index = "https://download.pytorch.org/whl/cpu" }
