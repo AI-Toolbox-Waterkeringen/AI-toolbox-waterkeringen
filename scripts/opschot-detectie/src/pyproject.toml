@@ -10,20 +10,9 @@ authors = [
 ]
 license = "GPL-3.0-or-later"
 requires-python = ">=3.11"
-dependencies = [
-    "matplotlib",
-    "pandas",
-    "geopandas",
-    "shapely",
-    "pdal",
-    "pycocotools",
-    "ipykernel",
-    "ipywidgets",
-    "scikit-image",
-    "rasterio",
-    "hydra-core",
-    "mercantile",
-    "bs4",
-    "colorlog",
-    "yapf",
-]
+# Dependencies are managed by pixi.toml
+dependencies = []
+
+[project.optional-dependencies]
+# All dependencies are managed through pixi.toml
+# This allows the package to be installable while letting pixi handle the environment

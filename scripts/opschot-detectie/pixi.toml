@@ -9,7 +9,7 @@ license = "GPL-3.0"
 license-file = "LICENSE"
 
 [dependencies]
-python = "==3.11"
+python = "3.11.*"
 pip = "*"
 pdal = "*"
 pdal_wrench = "*"
