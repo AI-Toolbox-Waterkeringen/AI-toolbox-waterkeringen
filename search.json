@@ -1,5 +1,16 @@
 [
   {
+    "objectID": "more.html",
+    "href": "more.html",
+    "title": "Meer over de AI Toolbox",
+    "section": "",
+    "text": "De AI Toolbox is ontwikkeld voor data scientists bij waterschappen. Heeft u algemene vragen over de toolbox die niet technisch van aard zijn, neem dan contact met ons op.\nOp deze pagina zijn voorbeelden te vinden van scripts in de AI Toolbox Waterkeringen. Klik links op een voorbeeld. Daarmee krijgt een een overzicht van wat een algoritme kan en hoe het te gebruiken is. De voorbeelden zijn gemaakt in Jupyter Notebooks en zijn ook reproduceerbaar.\nHet linkermenu bevat alle links naar de voorbeelden.",
+    "crumbs": [
+      "Meer weten",
+      "Meer over de AI Toolbox"
+    ]
+  },
+  {
     "objectID": "examples/scheurdetectie_voorbeeld.html",
     "href": "examples/scheurdetectie_voorbeeld.html",
     "title": "Scheurdetectie op droogtegevoelige dijken",
@@ -31,17 +42,6 @@
     "title": "Over ons",
     "section": "",
     "text": "Dit is een initiatief van HHNK, het PIW-programma van STOWA en RWS-WVL en HKV. We willen hiermee beheer en onderhoud van waterkeringen efficiënter en effectiever maken.\nWaterschappen inspecteren jaarlijks vele duizenden kilometers waterkeringen. Om inzicht te krijgen in actuele sterkte van waterkeringen wordt het steeds belangrijker om te kijken naar verschillen in conditie ten opzichte van de uitgangspunten van de toetsing en beoordeling. Dit soort inspecties zijn arbeidsintensief. Beheerders geven aan dat het handmatig vastleggen van schadebeelden en het verwerken van inspecties zeer veel tijd kost. Onze algoritmes bieden daarvoor een oplossing door consequent foto’s te vertalen naar informatie over degradatie, schadebeelden en veranderingen.\nDe AI toolbox is een open ontwikkeling. Heb je vragen of wil je meewerken aan nieuwe ontwikkelingen, neem dan contact met ons op."
-  },
-  {
-    "objectID": "more.html",
-    "href": "more.html",
-    "title": "Meer over de AI Toolbox",
-    "section": "",
-    "text": "De AI Toolbox is ontwikkeld voor data scientists bij waterschappen. Heeft u algemene vragen over de toolbox die niet technisch van aard zijn, neem dan contact met ons op.\nOp deze pagina zijn voorbeelden te vinden van scripts in de AI Toolbox Waterkeringen. Klik links op een voorbeeld. Daarmee krijgt een een overzicht van wat een algoritme kan en hoe het te gebruiken is. De voorbeelden zijn gemaakt in Jupyter Notebooks en zijn ook reproduceerbaar.\nHet linkermenu bevat alle links naar de voorbeelden.",
-    "crumbs": [
-      "Meer weten",
-      "Meer over de AI Toolbox"
-    ]
   },
   {
     "objectID": "examples/opschotdetectie_voorbeeld.html",
