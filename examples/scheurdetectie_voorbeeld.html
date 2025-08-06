@@ -72,9 +72,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-d5aa4a874f08e9f807ae0b09a7753b06.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-622b86c1af13978e1794ede69f47e20c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-d5aa4a874f08e9f807ae0b09a7753b06.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-fc273cee359eefb388100deb2cc26eb0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-0865ab0a65a7ab324909e59e8e13c0d5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-fc273cee359eefb388100deb2cc26eb0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -380,14 +380,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="stel-de-working-directory-in" class="level1">
 <h1>Stel de ‘working directory’ in</h1>
 <p>Dit instellen is zodat de relatieve paden tot de scripts en het model goed worden opgepakt door dit notebook.</p>
-<div id="cell-3" class="cell" data-execution_count="1">
+<div id="cell-3" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>cd <span class="st">"../../scripts/scheur-detectie/"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>d:\Jeroen\Projects\AI-toolbox-waterkeringen\scripts\scheur-detectie</code></pre>
-</div>
 </div>
 </section>
 <section id="laad-de-benodigde-imports-voor-dit-notebook" class="level1">
@@ -395,66 +392,67 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="cell-5" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio <span class="im">as</span> rio</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.windows <span class="im">import</span> Window</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.plot <span class="im">import</span> show</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.models <span class="im">import</span> load_model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tensorflow <span class="im">as</span> tf</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rasterio <span class="im">as</span> rio</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.windows <span class="im">import</span> Window</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> rasterio.plot <span class="im">import</span> show</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.models <span class="im">import</span> load_model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 </section>
 <section id="laad-het-getrainde-model-in-de-notebook" class="level1">
 <h1>Laad het getrainde model in de notebook</h1>
 <p>Inclusief de tijdens trainen gebruikte ‘custom functions’ zodat het model geen foutmelding geeft tijdens het voorspellen.</p>
-<div id="cell-7" class="cell" data-execution_count="3">
+<div id="cell-7" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model V2 - 2023 with Wetterskip</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>folds <span class="op">=</span> {<span class="dv">4</span>:{<span class="st">'EPOCHS'</span>:<span class="dv">150</span>,<span class="st">'batch'</span>:<span class="dv">80</span>,<span class="st">'LR'</span>:<span class="fl">0.0001</span>}}</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>fold  <span class="op">=</span>  <span class="dv">4</span>    </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>weights_folder <span class="op">=</span> <span class="st">"saved_weights/model_v2_plateau/"</span> <span class="op">+</span> <span class="st">'BATCHSIZE_</span><span class="sc">{}</span><span class="st">_LR_</span><span class="sc">{}</span><span class="st">_EPOCH_</span><span class="sc">{}</span><span class="st">_Fold_</span><span class="sc">{}</span><span class="st">'</span>.<span class="op">\</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                    <span class="bu">format</span>(folds[fold][<span class="st">'batch'</span>],folds[fold][<span class="st">'LR'</span>],folds[fold][<span class="st">'EPOCHS'</span>],fold)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dice_coef(y_true, y_pred):</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    y_true <span class="op">=</span> tf.keras.layers.Flatten()(y_true)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> tf.keras.layers.Flatten()(y_pred)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    intersection <span class="op">=</span> tf.reduce_sum(y_true <span class="op">*</span> y_pred)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    smooth <span class="op">=</span> <span class="fl">1e-15</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="fl">2.</span> <span class="op">*</span> intersection <span class="op">+</span> smooth) <span class="op">/</span> (tf.reduce_sum(y_true) <span class="op">+</span> tf.reduce_sum(y_pred) <span class="op">+</span> smooth)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dice_loss(y_true, y_pred):</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fl">1.0</span> <span class="op">-</span> dice_coef(y_true, y_pred)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(weights_folder,custom_objects<span class="op">=</span>{<span class="st">"dice_loss"</span>: dice_loss},<span class="bu">compile</span><span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model V2 - 2023 with Wetterskip</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>folds <span class="op">=</span> {<span class="dv">4</span>: {<span class="st">"EPOCHS"</span>: <span class="dv">150</span>, <span class="st">"batch"</span>: <span class="dv">80</span>, <span class="st">"LR"</span>: <span class="fl">0.0001</span>}}</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>fold <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>weights_folder <span class="op">=</span> (</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"saved_weights/model_v2_plateau/"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> <span class="st">"BATCHSIZE_</span><span class="sc">{}</span><span class="st">_LR_</span><span class="sc">{}</span><span class="st">_EPOCH_</span><span class="sc">{}</span><span class="st">_Fold_</span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        folds[fold][<span class="st">"batch"</span>], folds[fold][<span class="st">"LR"</span>], folds[fold][<span class="st">"EPOCHS"</span>], fold</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dice_coef(y_true, y_pred):</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    y_true <span class="op">=</span> tf.keras.layers.Flatten()(y_true)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> tf.keras.layers.Flatten()(y_pred)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    intersection <span class="op">=</span> tf.reduce_sum(y_true <span class="op">*</span> y_pred)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    smooth <span class="op">=</span> <span class="fl">1e-15</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (<span class="fl">2.0</span> <span class="op">*</span> intersection <span class="op">+</span> smooth) <span class="op">/</span> (</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        tf.reduce_sum(y_true) <span class="op">+</span> tf.reduce_sum(y_pred) <span class="op">+</span> smooth</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> dice_loss(y_true, y_pred):</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fl">1.0</span> <span class="op">-</span> dice_coef(y_true, y_pred)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> load_model(</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    weights_folder, custom_objects<span class="op">=</span>{<span class="st">"dice_loss"</span>: dice_loss}, <span class="bu">compile</span><span class="op">=</span><span class="va">False</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>WARNING:tensorflow:Unable to restore custom metric. Please ensure that the layer implements `get_config` and `from_config` when saving. In addition, please use the `custom_objects` arg when calling `load_model()`.</code></pre>
-</div>
 </div>
 </section>
 <section id="hieronder-een-voorbeeld-stuk-dijk-met-droogtescheuren" class="level1">
 <h1>Hieronder een voorbeeld stuk dijk met droogtescheuren</h1>
-<div id="cell-9" class="cell" data-execution_count="4">
+<div id="cell-9" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>inputfolder <span class="op">=</span> <span class="st">"voorbeeld/"</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>inputtif <span class="op">=</span> <span class="st">"testfile_cracks_1024x2048.tif"</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">32</span>))</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>raster_rio <span class="op">=</span> rio.<span class="bu">open</span>(inputfolder <span class="op">+</span> inputtif)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>show(raster_rio, ax<span class="op">=</span>ax)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>inputfolder <span class="op">=</span> <span class="st">"voorbeeld/"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>inputtif <span class="op">=</span> <span class="st">"testfile_cracks_1024x2048.tif"</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">32</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>raster_rio <span class="op">=</span> rio.<span class="bu">open</span>(inputfolder <span class="op">+</span> inputtif)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>show(raster_rio, ax<span class="op">=</span>ax)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="scheurdetectie_voorbeeld_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
 </div>
 </section>
 <section id="haal-het-voorbeeldraster-in-opgesneden-windows-door-het-model-heen" class="level1">
@@ -463,92 +461,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="cell-11" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Laad de folders</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>inputfolder <span class="op">=</span> <span class="st">"voorbeeld/"</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>inputtif <span class="op">=</span> <span class="st">"testfile_cracks_1024x2048"</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>extension <span class="op">=</span> <span class="st">".tif"</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>labelfolder <span class="op">=</span> <span class="st">"voorbeeld/label/"</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>file_location <span class="op">=</span> inputfolder <span class="op">+</span> inputtif <span class="op">+</span> extension</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>label_location <span class="op">=</span> labelfolder <span class="op">+</span> inputtif <span class="op">+</span> <span class="st">"_label"</span> <span class="op">+</span> extension</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Update het originele profiel naar 1 band</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>raster_file <span class="op">=</span> rio.<span class="bu">open</span>(file_location)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>profile <span class="op">=</span> raster_file.profile.copy()</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>profile.update(count<span class="op">=</span><span class="dv">1</span>)</span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Maak het bestaand aan</span></span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rio.<span class="bu">open</span>(<span class="bu">str</span>(label_location), <span class="st">'w'</span>, <span class="op">**</span>profile) <span class="im">as</span> out_file:</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    out_file.write(np.zeros([<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>]),window<span class="op">=</span>Window.from_slices((<span class="dv">0</span>, <span class="dv">1</span>), (<span class="dv">0</span>, <span class="dv">1</span>)))</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Totaal aantal windows</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> ((profile[<span class="st">'height'</span>]<span class="op">-</span><span class="dv">256</span>)<span class="op">/</span><span class="dv">256</span>) <span class="op">*</span> ((profile[<span class="st">'width'</span>]<span class="op">-</span><span class="dv">256</span>)<span class="op">/</span><span class="dv">256</span>)</span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop over de windows en voorspel</span></span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,profile[<span class="st">'height'</span>]<span class="op">-</span><span class="dv">256</span>,<span class="dv">256</span>):</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> idy <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>,profile[<span class="st">'width'</span>]<span class="op">-</span><span class="dv">256</span>,<span class="dv">256</span>):</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(idx, <span class="st">" of "</span>, total)</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        wdw <span class="op">=</span> Window.from_slices((idx, idx<span class="op">+</span><span class="dv">256</span>), (idy, idy<span class="op">+</span><span class="dv">256</span>))</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> rio.<span class="bu">open</span>(<span class="bu">str</span>(file_location), <span class="st">'r'</span>) <span class="im">as</span> out_file:</span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> out_file.read(window<span class="op">=</span>wdw)</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> x[:<span class="dv">3</span>,:,:]</span>
-<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> np.rollaxis(x,<span class="dv">0</span>,<span class="dv">3</span>)</span>
-<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>        threshold <span class="op">=</span> <span class="fl">0.8</span></span>
-<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>        y_pred <span class="op">=</span> model.predict(np.expand_dims(x<span class="op">/</span><span class="dv">255</span>, axis<span class="op">=</span><span class="dv">0</span>))[<span class="dv">0</span>] </span>
-<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>        y_pred_threshold <span class="op">=</span> np.where((y_pred<span class="op">*</span><span class="dv">1000</span>)<span class="op">&gt;</span>(threshold), <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> rio.<span class="bu">open</span>(<span class="bu">str</span>(label_location), <span class="st">'r+'</span>, <span class="op">**</span>profile) <span class="im">as</span> out_file:</span>
-<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>            out_file.write(y_pred_threshold.reshape(<span class="dv">1</span>,<span class="dv">256</span>,<span class="dv">256</span>), window<span class="op">=</span>wdw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Laad de folders</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>inputfolder <span class="op">=</span> <span class="st">"voorbeeld/"</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>inputtif <span class="op">=</span> <span class="st">"testfile_cracks_1024x2048"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>extension <span class="op">=</span> <span class="st">".tif"</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>labelfolder <span class="op">=</span> <span class="st">"voorbeeld/label/"</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>file_location <span class="op">=</span> inputfolder <span class="op">+</span> inputtif <span class="op">+</span> extension</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>label_location <span class="op">=</span> labelfolder <span class="op">+</span> inputtif <span class="op">+</span> <span class="st">"_label"</span> <span class="op">+</span> extension</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Update het originele profiel naar 1 band</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>raster_file <span class="op">=</span> rio.<span class="bu">open</span>(file_location)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>profile <span class="op">=</span> raster_file.profile.copy()</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>profile.update(count<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Maak het bestaand aan</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> rio.<span class="bu">open</span>(<span class="bu">str</span>(label_location), <span class="st">"w"</span>, <span class="op">**</span>profile) <span class="im">as</span> out_file:</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    out_file.write(np.zeros([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>]), window<span class="op">=</span>Window.from_slices((<span class="dv">0</span>, <span class="dv">1</span>), (<span class="dv">0</span>, <span class="dv">1</span>)))</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Totaal aantal windows</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> ((profile[<span class="st">"height"</span>] <span class="op">-</span> <span class="dv">256</span>) <span class="op">/</span> <span class="dv">256</span>) <span class="op">*</span> ((profile[<span class="st">"width"</span>] <span class="op">-</span> <span class="dv">256</span>) <span class="op">/</span> <span class="dv">256</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Loop over de windows en voorspel</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, profile[<span class="st">"height"</span>] <span class="op">-</span> <span class="dv">256</span>, <span class="dv">256</span>):</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> idy <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, profile[<span class="st">"width"</span>] <span class="op">-</span> <span class="dv">256</span>, <span class="dv">256</span>):</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(idx, <span class="st">" of "</span>, total)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        wdw <span class="op">=</span> Window.from_slices((idx, idx <span class="op">+</span> <span class="dv">256</span>), (idy, idy <span class="op">+</span> <span class="dv">256</span>))</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> rio.<span class="bu">open</span>(<span class="bu">str</span>(file_location), <span class="st">"r"</span>) <span class="im">as</span> out_file:</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> out_file.read(window<span class="op">=</span>wdw)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> x[:<span class="dv">3</span>, :, :]</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> np.rollaxis(x, <span class="dv">0</span>, <span class="dv">3</span>)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>        threshold <span class="op">=</span> <span class="fl">0.8</span></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>        y_pred <span class="op">=</span> model.predict(np.expand_dims(x <span class="op">/</span> <span class="dv">255</span>, axis<span class="op">=</span><span class="dv">0</span>))[<span class="dv">0</span>]</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>        y_pred_threshold <span class="op">=</span> np.where((y_pred <span class="op">*</span> <span class="dv">1000</span>) <span class="op">&gt;</span> (threshold), <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> rio.<span class="bu">open</span>(<span class="bu">str</span>(label_location), <span class="st">"r+"</span>, <span class="op">**</span>profile) <span class="im">as</span> out_file:</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>            out_file.write(y_pred_threshold.reshape(<span class="dv">1</span>, <span class="dv">256</span>, <span class="dv">256</span>), window<span class="op">=</span>wdw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code>0  of  21.0
-1/1 [==============================] - 1s 928ms/step
-0  of  21.0
-1/1 [==============================] - 0s 82ms/step
-0  of  21.0
-1/1 [==============================] - 0s 83ms/step
-0  of  21.0
-1/1 [==============================] - 0s 83ms/step
-0  of  21.0
-1/1 [==============================] - 0s 81ms/step
-0  of  21.0
-1/1 [==============================] - 0s 80ms/step
-0  of  21.0
-1/1 [==============================] - 0s 84ms/step
-256  of  21.0
-1/1 [==============================] - 0s 91ms/step
-256  of  21.0
-1/1 [==============================] - 0s 88ms/step
-256  of  21.0
-1/1 [==============================] - 0s 87ms/step
-256  of  21.0
-1/1 [==============================] - 0s 81ms/step
-256  of  21.0
-1/1 [==============================] - 0s 82ms/step
-256  of  21.0
-1/1 [==============================] - 0s 86ms/step
-256  of  21.0
-1/1 [==============================] - 0s 86ms/step
-512  of  21.0
-1/1 [==============================] - 0s 86ms/step
-512  of  21.0
-1/1 [==============================] - 0s 80ms/step
-512  of  21.0
-1/1 [==============================] - 0s 92ms/step
-512  of  21.0
-1/1 [==============================] - 0s 76ms/step
-512  of  21.0
-1/1 [==============================] - 0s 77ms/step
-512  of  21.0
-1/1 [==============================] - 0s 94ms/step
-512  of  21.0
-1/1 [==============================] - 0s 82ms/step</code></pre>
-</div>
 </div>
 </section>
 <section id="plot-het-eindresultaat" class="level1">
@@ -557,36 +510,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="cell-13" class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Maak een figuur aan</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">32</span>))</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualiseer het origineel</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>inputfolder <span class="op">=</span> <span class="st">"voorbeeld/"</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>inputtif <span class="op">=</span> <span class="st">"testfile_cracks_1024x2048.tif"</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>raster_rio <span class="op">=</span> rio.<span class="bu">open</span>(inputfolder <span class="op">+</span> inputtif)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>raster_array <span class="op">=</span> raster_rio.read()</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>show(raster_array, ax<span class="op">=</span>ax)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualiseer hieroveer heen het label</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>inputfolder <span class="op">=</span> <span class="st">"voorbeeld/label/"</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>inputtif <span class="op">=</span> <span class="st">"testfile_cracks_1024x2048_label.tif"</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>raster_rio <span class="op">=</span> rio.<span class="bu">open</span>(inputfolder <span class="op">+</span> inputtif)</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>label_array <span class="op">=</span> raster_rio.read()</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>masked_label <span class="op">=</span> np.ma.masked_where(label_array <span class="op">==</span> <span class="dv">0</span>, label_array)</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>ax.imshow(masked_label.reshape(<span class="dv">1024</span>,<span class="dv">2048</span>,<span class="dv">1</span>), cmap<span class="op">=</span><span class="st">"viridis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Maak een figuur aan</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">32</span>))</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualiseer het origineel</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>inputfolder <span class="op">=</span> <span class="st">"voorbeeld/"</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>inputtif <span class="op">=</span> <span class="st">"testfile_cracks_1024x2048.tif"</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>raster_rio <span class="op">=</span> rio.<span class="bu">open</span>(inputfolder <span class="op">+</span> inputtif)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>raster_array <span class="op">=</span> raster_rio.read()</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>show(raster_array, ax<span class="op">=</span>ax)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualiseer hieroveer heen het label</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>inputfolder <span class="op">=</span> <span class="st">"voorbeeld/label/"</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>inputtif <span class="op">=</span> <span class="st">"testfile_cracks_1024x2048_label.tif"</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>raster_rio <span class="op">=</span> rio.<span class="bu">open</span>(inputfolder <span class="op">+</span> inputtif)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>label_array <span class="op">=</span> raster_rio.read()</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>masked_label <span class="op">=</span> np.ma.masked_where(label_array <span class="op">==</span> <span class="dv">0</span>, label_array)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>ax.imshow(masked_label.reshape(<span class="dv">1024</span>, <span class="dv">2048</span>, <span class="dv">1</span>), cmap<span class="op">=</span><span class="st">"viridis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="scheurdetectie_voorbeeld_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
 </div>
 
 
