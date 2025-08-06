@@ -2,7 +2,7 @@ hq: False
 model_type: 'vit_b'
 disk_path: './'
 data_path: '${disk_path}/data'
-checkpoint: 'sam_vit_b_01ec64.pth' 
+checkpoint: 'sam_vit_b_01ec64.pth'
 DEVICE: 'cpu' # 'cuda:1'
 DINO_BOX_THRESHOLD: 0.2
 DINO_TEXT_THRESHOLD: 0.
@@ -33,4 +33,4 @@ tile_size_y: 2048
 
 hydra:
   run:
-    dir: './'   
+    dir: './'

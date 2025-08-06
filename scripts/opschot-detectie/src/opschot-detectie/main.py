@@ -1,36 +1,37 @@
-import os
-import torch
-import hydra
-import torchvision
-import numpy as np
-import geopandas as gpd
-from pathlib import Path
-import tqdm
-import rasterio.features
-import shapely.geometry
-import pycocotools.mask
-from segment_anything_hq import (
-    SamPredictor as SamPredictor_hq,
-    sam_model_registry as sam_model_registry_hq,
-)
-from segment_anything import SamPredictor, sam_model_registry
-import utils
-from omegaconf import DictConfig
 import logging
 from logging.config import fileConfig
+from pathlib import Path
 
+import geopandas as gpd
 import groundingdino.util.inference
+import hydra
+import numpy as np
+import pycocotools.mask
+import rasterio.features
+import shapely.geometry
+import torch
+import torchvision
+import tqdm
+import utils
+from omegaconf import DictConfig
+from pycocotools.coco import COCO
+from segment_anything import SamPredictor, sam_model_registry
+from segment_anything_hq import (
+    SamPredictor as SamPredictor_hq,
+)
+from segment_anything_hq import (
+    sam_model_registry as sam_model_registry_hq,
+)
 
 # os.environ['PYTORCH_CUDA_ALLOC_CONF'] = 'expandable_segments:True'
 # assert torch.cuda.is_available()
 
-fileConfig("logging.conf", disable_existing_loggers=False)
+fileConfig("src/opschot-detectie/logging.conf", disable_existing_loggers=False)
 logger = logging.getLogger("root")
 
 
 @hydra.main(config_path="config", config_name="config", version_base=None)
 def main(cfg: DictConfig) -> None:
-
     # Load Grounding Dino Model
     logger.info(f"Loading grounding dino model from f{cfg.GROUNDING_DINO_CONFIG_PATH}")
     dino_model = groundingdino.util.inference.load_model(
@@ -56,9 +57,13 @@ def main(cfg: DictConfig) -> None:
     # Inladen tilebounds
     df_tilebounds = utils.find_tile_bounds(cfg.path_tifftiles)
 
-    # image id's
+    # Coco image data
     path_instances = Path(cfg.dataDir) / "annotations" / "instances.json"
-    imgIds = utils.get_annotation_image_ids(path_instances)
+    coco = COCO(path_instances)
+    cats = coco.loadCats(coco.getCatIds())
+    catNms = [cat["name"] for cat in cats]
+    catIds = coco.getCatIds(catNms=catNms)
+    imgIds = coco.getImgIds()
 
     # dataframe with prediction shapes
     df_pred_shapes = dict(category=[], confidence=[], geometry=[])
@@ -68,9 +73,8 @@ def main(cfg: DictConfig) -> None:
 
     # loop door image id's
     for imgId in tqdm.tqdm(imgIds):
-
         # path to original image
-        imgPath = utils.get_image_path(imgId)
+        imgPath = utils.get_image_path(cfg, imgId)
 
         # Load image
         image_pil, image = utils.load_image(imgPath)
@@ -144,7 +148,7 @@ def main(cfg: DictConfig) -> None:
 
         # SAM masks
         assert len(pred_phrases_clean) == len(masks)
-        shapes, titles = [], []
+        # shapes, titles = [], []
         for cat_title, mask in zip(pred_phrases_clean, masks):
             mask = mask.cpu().numpy()
             cat_shapes = rasterio.features.shapes(
@@ -160,10 +164,10 @@ def main(cfg: DictConfig) -> None:
                     df_pred_shapes["confidence"].append(confidence)
                     df_pred_shapes["geometry"].append(shape)
 
-        for catId, catName in zip(catIds, nms):
+        for catId, catName in zip(catIds, catNms):
             for ann in anns[catId]:
                 t = coco.imgs[ann["image_id"]]
-                if type(ann["segmentation"]["counts"]) == list:
+                if isinstance(ann["segmentation"]["counts"], list):
                     rle = pycocotools.mask.frPyObjects(
                         [ann["segmentation"]], t["height"], t["width"]
                     )
