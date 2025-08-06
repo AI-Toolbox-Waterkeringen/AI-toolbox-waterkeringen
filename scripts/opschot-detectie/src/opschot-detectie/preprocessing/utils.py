@@ -41,7 +41,6 @@ def get_dike_traject_geometry(
     """
     geoms = []
     for dike_traject_fname in dike_traject_fnames:
-
         # Read the file and explode any MultiPolygons into individual parts
         exploded_geometries = (
             gpd.read_file(dike_traject_path / dike_traject_fname)

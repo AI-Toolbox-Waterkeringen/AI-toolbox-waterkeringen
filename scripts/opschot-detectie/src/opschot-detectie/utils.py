@@ -1,14 +1,18 @@
-import torch
+import json
+import os
 from pathlib import Path
-from PIL import Image
-import torchvision.transforms as T
+from typing import Dict, Iterable, List, Tuple, Union
+
+import geopandas as gpd
+import matplotlib.axes
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-import matplotlib.axes
+import torch
+import torchvision.transforms as T
 from groundingdino.util.utils import get_phrases_from_posmap
-from typing import Union, List, Tuple, Iterable, Dict
 from omegaconf import DictConfig
+from PIL import Image
 from pycocotools.coco import COCO
 
 
@@ -50,21 +54,21 @@ def load_image(image_path: Union[str, Path]) -> Tuple[Image.Image, torch.Tensor]
     return image_pil, transformed_image
 
 
-def get_tags(cfg: DictConfig) -> str:
-    """
-    Get tags from config file and updates to the required format.
-    """
-    # Tags
-    if cfg.use_fixed_tags:
-        tags = ",".join(cfg.fixed_tags)
-    else:
-        # Find tags with RAM
-        ram_model = ram_model.to(cfg.DEVICE)
-        raw_image = image_pil.resize((384, 384))
-        raw_image = transform(raw_image).unsqueeze(0).to(cfg.DEVICE)
-        res = inference_ram(raw_image, ram_model)
-        tags = res[0].replace(" |", ",")
-    return tags
+# def get_tags(cfg: DictConfig) -> str:
+#     """
+#     Get tags from config file and updates to the required format.
+#     """
+#     # Tags
+#     if cfg.use_fixed_tags:
+#         tags = ",".join(cfg.fixed_tags)
+#     else:
+#         # Find tags with RAM
+#         ram_model = ram_model.to(cfg.DEVICE)
+#         raw_image = image_pil.resize((384, 384))
+#         raw_image = transform(raw_image).unsqueeze(0).to(cfg.DEVICE)
+#         res = inference_ram(raw_image, ram_model)
+#         tags = res[0].replace(" |", ",")
+#     return tags
 
 
 def get_category_names(coco: COCO) -> List[str]:
@@ -92,7 +96,7 @@ def get_category_ids(coco: COCO) -> List[int]:
     Returns:
     - List[int]: A list of category IDs.
     """
-    cats = coco.loadCats(coco.getCatIds())
+    # cats = coco.loadCats(coco.getCatIds())
     catNms = get_category_names(coco)
     catIds = coco.getCatIds(catNms=catNms)
     return catIds
@@ -120,11 +124,12 @@ def get_annotations(coco: COCO, imgId: int) -> Dict[int, list]:
     return anns
 
 
-def get_image_path(coco: COCO, imgId: int) -> Path:
+def get_image_path(cfg: DictConfig, coco: COCO, imgId: int) -> Path:
     """
     Retrieve the file path for a given image ID from a COCO dataset.
 
     Parameters:
+    - cfg (DictConfig): config
     - coco (COCO): The COCO dataset instance.
     - imgId (int): The image ID for which the path is to be retrieved.
 
@@ -149,9 +154,9 @@ def get_annotation_image_ids(path_instances: Union[str, Path]) -> List[int]:
     - List[int]: A list of image IDs from the annotations.
     """
     coco_instance = COCO(path_instances)
-    cats = coco_instance.loadCats(coco_instance.getCatIds())
-    nms = [cat["name"] for cat in cats]
-    catIds = coco_instance.getCatIds(catNms=nms)
+    # cats = coco_instance.loadCats(coco_instance.getCatIds())
+    # nms = [cat["name"] for cat in cats]
+    # catIds = coco_instance.getCatIds(catNms=nms)
     imgIds = coco_instance.getImgIds()
     return imgIds
 
@@ -391,7 +396,7 @@ def save_mask_data(
     value = 0  # 0 for background
     mask_img = torch.zeros(mask_list.shape[-2:])
     for idx, mask in enumerate(mask_list):
-        mask_img[mask.cpu().numpy()[0] == True] = value + idx + 1
+        mask_img[mask.cpu().numpy()[0]] = value + idx + 1
     plt.figure(figsize=(10, 10))
     plt.imshow(mask_img.numpy())
     plt.axis("off")

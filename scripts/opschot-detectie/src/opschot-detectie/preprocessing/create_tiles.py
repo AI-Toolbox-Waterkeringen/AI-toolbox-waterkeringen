@@ -18,7 +18,6 @@ logger = logging.getLogger("root")
 
 @hydra.main(config_path="../config", config_name="config")
 def main(cfg: DictConfig) -> None:
-
     # create output directory for tiles
     tile_dataset_path = Path(cfg.disk_path) / "tile_dataset"
 
@@ -108,7 +107,6 @@ def main(cfg: DictConfig) -> None:
         ]
 
         if len(tiles_intersect) > 0:
-
             # create output directory for particular raster
             raster_out_dir = tile_dataset_path / tif_path.stem
             if not raster_out_dir.exists():
@@ -154,7 +152,6 @@ def main(cfg: DictConfig) -> None:
 
             logger.info(f"Number of intersecting tiles: {len(tiles_intersect)}")
             for i in tqdm.tqdm(range(len(tiles_intersect))):
-
                 xmin_cell = tiles_intersect.iloc[i]["xmin"]
                 ymin_cell = tiles_intersect.iloc[i]["ymin"]
                 xmax_cell = tiles_intersect.iloc[i]["xmax"]
