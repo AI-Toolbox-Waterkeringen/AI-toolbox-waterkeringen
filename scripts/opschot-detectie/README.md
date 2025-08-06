@@ -9,4 +9,3 @@ Deze repository bevat een oplossing voor het detecteren van opschot op de steenb
 ```bash
     pixi install
 ```
-

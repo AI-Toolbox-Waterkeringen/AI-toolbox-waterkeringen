@@ -4,16 +4,17 @@ Images without label are filtered from the dataset.
 A fraction of images without label is added to the dataset
 Specify fraction_no_label in config.yml
 
-@authors: 
+@authors:
     Joost Driebergen (HKV lijn in water)
     Jeroen Baars     (HHNK)
 """
-import random, yaml
+
+import yaml
 import cv2
 from pathlib import Path
 from helper_functions.functions import folder_buildr, copy_file
 
-#List to be filled
+# List to be filled
 masks_with_label, masks_without_label = [], []
 
 # Load config file
@@ -33,17 +34,20 @@ subimg_img, subimg_masks = folder_buildr(data_subimg)
 filter_img, filter_masks = folder_buildr(data_filter, make_dir=True)
 
 # Filter out image with empty masks
-for source_mask in sorted(subimg_masks.glob('*.png')):
-    print(str(source_mask).split("masks")[1].ljust(60), end='\r')
+for source_mask in sorted(subimg_masks.glob("*.png")):
+    print(str(source_mask).split("masks")[1].ljust(60), end="\r")
     im = cv2.imread(str(source_mask))
     if im.sum() > 0:
         masks_with_label.append(source_mask)
     else:
         masks_without_label.append(source_mask)
 
-#Print output of filter
-print('Total images with label: {} vs without label: {}'\
-    .format(len(masks_with_label), len(masks_without_label)))
+# Print output of filter
+print(
+    "Total images with label: {} vs without label: {}".format(
+        len(masks_with_label), len(masks_without_label)
+    )
+)
 
 # Random seed needed before every use of random
 # select_val = int(len(masks_with_label)*fraction_no_label)
@@ -52,8 +56,8 @@ print('Total images with label: {} vs without label: {}'\
 masks_2_copy = masks_with_label
 #  + random.sample(masks_without_label, select_val)
 
-#Copy filtered selection to folder
+# Copy filtered selection to folder
 for source_mask in masks_2_copy:
-    print(str(source_mask).split("masks")[1].ljust(60), end='\r')
+    print(str(source_mask).split("masks")[1].ljust(60), end="\r")
     copy_file(source_mask, subimg_img, filter_img)
     copy_file(source_mask, subimg_masks, filter_masks)

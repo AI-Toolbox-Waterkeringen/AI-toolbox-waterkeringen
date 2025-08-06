@@ -36,4 +36,3 @@ cross_val:
     n_transforms_geo      : 2     #Data augmentation (if 5 then 5(geometric augmentation)x X(color augmentation)=25 augmentated images are created.
     n_transforms_rgb      : 2     #Data augmentation (if 5 then X(geometric augmentation)x 5(color augmentation)=25 augmentated images are created.
     preferred_fold        : 5     #We use cross-validation to predict on the whole dataset. If an image is not present in testset, the trained model of this fold will be used
-    

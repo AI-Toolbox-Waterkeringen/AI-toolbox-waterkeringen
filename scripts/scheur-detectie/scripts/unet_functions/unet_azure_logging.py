@@ -1,7 +1,9 @@
 from tensorflow.keras.callbacks import Callback
 
+
 class LogToAzure(Callback):
-    '''Keras Callback for realtime logging to Azure'''
+    """Keras Callback for realtime logging to Azure"""
+
     def __init__(self, run):
         super(LogToAzure, self).__init__()
         self.run = run

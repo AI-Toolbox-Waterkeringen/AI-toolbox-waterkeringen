@@ -3,10 +3,11 @@
 Preprocesses the export from supervisely (images and masks) to subimages
 Specify subimage_height and subimage_width in config.yml
 
-@authors: 
+@authors:
     Joost Driebergen (HKV lijn in water)
     Jeroen Baars     (HHNK)
 """
+
 import cv2
 import yaml
 import glob
@@ -20,12 +21,13 @@ with open("config.yml", "r") as ymlfile:
 
 # Load paths from config
 input_masks = cfg["folder"]["input_masks"]
-data_input  = Path(cfg["folder"]["input_folder"])
+data_input = Path(cfg["folder"]["input_folder"])
 
 # Setup folders and make the directories
 img, masks = folder_buildr(data_input, masks_dir=input_masks)
 
 print(img, masks)
+
 
 def read_image(path, IMAGE_SIZE):
     if not (type(path) == str):
@@ -36,17 +38,17 @@ def read_image(path, IMAGE_SIZE):
     x = x.astype(np.float32)
     return x
 
-for mask_filter in glob.glob(str(masks/'*.png')):
 
+for mask_filter in glob.glob(str(masks / "*.png")):
     if "ilpendam" in str(mask_filter) or "jisp" in str(mask_filter):
         x = read_image(mask_filter, 4000)
-        x = x*255
-        x_temp = np.where(x==1,0,x)
-        x_temp = np.where(x==2,1,x_temp)    
+        x = x * 255
+        x_temp = np.where(x == 1, 0, x)
+        x_temp = np.where(x == 2, 1, x_temp)
     else:
         x = read_image(mask_filter, 4096)
-        x = x*255
-        x_temp = np.where(x==2,0,x)
+        x = x * 255
+        x_temp = np.where(x == 2, 0, x)
 
     print(np.unique(x_temp, return_counts=True))
-    cv2.imwrite(mask_filter,x_temp)    
+    cv2.imwrite(mask_filter, x_temp)

@@ -8,6 +8,12 @@ readme = "README.md"
 license = "GPL-3.0"
 license-file = "LICENSE"
 
+[tasks]
+# Installation
+install = "pre-commit install"
+pre-commit-autoupdate = "pre-commit autoupdate"
+pre-commit = "pre-commit run --all-files"
+
 [dependencies]
 python = "3.11.*"
 pip = "*"
@@ -22,6 +28,7 @@ geopandas = "*"
 shapely = "*"
 pycocotools = "*"
 jupyterlab = "*"
+pre-commit = "*"
 ipykernel = "*"
 ipywidgets = "*"
 scikit-image = "*"

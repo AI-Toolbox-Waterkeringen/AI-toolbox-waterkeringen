@@ -1,14 +1,16 @@
 """
 Optional script
-Images specified are removed from the dataset  
+Images specified are removed from the dataset
 Specify images_manual_select.txt in config.yml
 
-@authors: 
+@authors:
     Joost Driebergen (HKV lijn in water)
     Jeroen Baars     (HHNK)
 """
 
-import os, pickle, yaml
+import os
+import pickle
+import yaml
 from glob import glob
 from pathlib import Path
 from helper_functions.functions import folder_buildr
@@ -22,7 +24,7 @@ from helper_functions.functions import folder_buildr
 
 # To reproduce manual removal of images on other machines
 with open("images_manual_select.txt", "rb") as fp:
-   images_manual = pickle.load(fp)
+    images_manual = pickle.load(fp)
 
 # Load config file
 with open("../config.yml", "r") as ymlfile:
@@ -32,10 +34,14 @@ with open("../config.yml", "r") as ymlfile:
 data_filter = Path(cfg["folder"]["filter_folder"])
 filter_img, filter_masks = folder_buildr(data_filter)
 
-images  = [os.path.basename(x) for x in sorted(glob(os.path.join(filter_img, "*.png")))]
+images = [os.path.basename(x) for x in sorted(glob(os.path.join(filter_img, "*.png")))]
 diff = list(set(images) - set(images_manual))
-print("Removed {} of the {} images because of manual filtering".format(len(diff), len(images)))
+print(
+    "Removed {} of the {} images because of manual filtering".format(
+        len(diff), len(images)
+    )
+)
 
 for file in diff:
-   os.remove(filter_img / file)
-   os.remove(filter_masks / file)
+    os.remove(filter_img / file)
+    os.remove(filter_masks / file)

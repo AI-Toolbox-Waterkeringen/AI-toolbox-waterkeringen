@@ -7,5 +7,7 @@
         "**.ipynb_checkpoints": true,
         "**/.ipynb_checkpoints/**": true,
         "**.hydra**": true
-    }
+    },
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python-envs.pythonProjects": []
 }
