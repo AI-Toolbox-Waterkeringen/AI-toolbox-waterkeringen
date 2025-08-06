@@ -42,10 +42,10 @@ website:
           - examples/scheurdetectie_voorbeeld.ipynb
   page-footer: |
     <div>
-      ![Stichting Toegepast Onderzoek Waterbeheer](/assets/stowa.png) 
-      ![Rijkswaterstaat Ministerie van Infrastructuur en Waterstaat](/assets/rws.png) 
+      ![Stichting Toegepast Onderzoek Waterbeheer](/assets/stowa.png)
+      ![Rijkswaterstaat Ministerie van Infrastructuur en Waterstaat](/assets/rws.png)
     </div>
     <div>
-      ![Hoogheemraadschap Hollands Noorderkwartier](/assets/hhnk.jpg) 
+      ![Hoogheemraadschap Hollands Noorderkwartier](/assets/hhnk.jpg)
       ![HKV lijn in water](/assets/hkv.png)
     </div>

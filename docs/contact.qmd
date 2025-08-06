@@ -2,7 +2,7 @@
 title: "Contact"
 ---
 
-Dit is een open ontwikkeling. Alle algoritmes zijn open source beschikbaar en we streven ernaar om de data science community in de watersector hiermee te enthousiasmeren, te stimuleren en te motiveren om samen met ons nieuwe algoritmes te ontwikkelen. 
+Dit is een open ontwikkeling. Alle algoritmes zijn open source beschikbaar en we streven ernaar om de data science community in de watersector hiermee te enthousiasmeren, te stimuleren en te motiveren om samen met ons nieuwe algoritmes te ontwikkelen.
 
 Wil je meewerken aan nieuwe ontwikkelingen, wil je toegang krijgen tot de trainingsdata (of wil je trainingsdata toevoegen), of heb je algemene vragen: neem dan contact met ons op via <aitoolboxwaterkeringen@hkv.nl>.
 

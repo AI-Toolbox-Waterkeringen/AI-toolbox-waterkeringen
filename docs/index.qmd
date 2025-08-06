@@ -5,7 +5,7 @@ format:
   html:
     page-layout: custom
     css: assets/frontpage.css
-include-in-header: 
+include-in-header:
    - text: <script src="assets/glide.min.js" type="application/javascript"></script>
    - text: <link rel="stylesheet" href="assets/glide.core.css">
    - text: <link rel="stylesheet" href="assets/glide.theme.css">
