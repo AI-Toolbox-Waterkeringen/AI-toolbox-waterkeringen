@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://aitoolboxwaterkeringen.nl/more.html</loc>
-    <lastmod>2025-08-06T14:43:50.475Z</lastmod>
-  </url>
-  <url>
     <loc>https://aitoolboxwaterkeringen.nl/index.html</loc>
-    <lastmod>2025-08-06T14:43:50.475Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aitoolboxwaterkeringen.nl/examples/scheurdetectie_voorbeeld.html</loc>
-    <lastmod>2025-08-06T14:43:50.475Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aitoolboxwaterkeringen.nl/about.html</loc>
-    <lastmod>2025-08-06T14:43:50.471Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aitoolboxwaterkeringen.nl/data.html</loc>
-    <lastmod>2025-08-06T14:44:37.693Z</lastmod>
-  </url>
-  <url>
-    <loc>https://aitoolboxwaterkeringen.nl/examples/opschotdetectie_voorbeeld.html</loc>
-    <lastmod>2025-08-06T14:43:50.474Z</lastmod>
+    <lastmod>2025-08-12T14:41:58.113Z</lastmod>
   </url>
   <url>
     <loc>https://aitoolboxwaterkeringen.nl/contact.html</loc>
-    <lastmod>2025-08-06T14:43:50.474Z</lastmod>
+    <lastmod>2025-08-12T14:41:58.112Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aitoolboxwaterkeringen.nl/more.html</loc>
+    <lastmod>2025-08-12T14:41:58.113Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aitoolboxwaterkeringen.nl/examples/opschotdetectie_voorbeeld.html</loc>
+    <lastmod>2025-08-12T14:41:58.112Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aitoolboxwaterkeringen.nl/examples/scheurdetectie_voorbeeld.html</loc>
+    <lastmod>2025-08-12T14:41:58.113Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aitoolboxwaterkeringen.nl/about.html</loc>
+    <lastmod>2025-08-12T14:41:58.109Z</lastmod>
+  </url>
+  <url>
+    <loc>https://aitoolboxwaterkeringen.nl/data.html</loc>
+    <lastmod>2025-08-12T14:42:40.082Z</lastmod>
   </url>
 </urlset>

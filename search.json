@@ -1,5 +1,12 @@
 [
   {
+    "objectID": "contact.html",
+    "href": "contact.html",
+    "title": "Contact",
+    "section": "",
+    "text": "Dit is een open ontwikkeling. Alle algoritmes zijn open source beschikbaar en we streven ernaar om de data science community in de watersector hiermee te enthousiasmeren, te stimuleren en te motiveren om samen met ons nieuwe algoritmes te ontwikkelen.\nWil je meewerken aan nieuwe ontwikkelingen, wil je toegang krijgen tot de trainingsdata (of wil je trainingsdata toevoegen), of heb je algemene vragen: neem dan contact met ons op via aitoolboxwaterkeringen@hkv.nl.\nVoor meer informatie neem contact op met:\n\nGuy Dupuits – inhoudelijk expert op waterkeringen en AI algoritmes (dupuits@hkv.nl)\nErik Vastenburg – waterveiligheidsadviseur bij HHNK (e.vastenburg@hhnk.nl)"
+  },
+  {
     "objectID": "more.html",
     "href": "more.html",
     "title": "Meer over de AI Toolbox",
@@ -9,32 +16,6 @@
       "Meer weten",
       "Meer over de AI Toolbox"
     ]
-  },
-  {
-    "objectID": "examples/scheurdetectie_voorbeeld.html",
-    "href": "examples/scheurdetectie_voorbeeld.html",
-    "title": "Scheurdetectie op droogtegevoelige dijken",
-    "section": "",
-    "text": "Dit is een voorbeeldnotebook om met een Unet model droogtescheuren op droogtegevoelige dijken te detecteren. Het model is getraind op een verschillende dijken in het beheergebied van HHNK en Wetterskip Fryslan.\n\nStel de ‘working directory’ in\nDit instellen is zodat de relatieve paden tot de scripts en het model goed worden opgepakt door dit notebook.\n\n\nCode\n%cd \"../../scripts/scheur-detectie/\"\n\n\n\n\nLaad de benodigde imports voor dit notebook\n\n\nCode\n# Imports\n\nimport tensorflow as tf\nimport rasterio as rio\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom rasterio.windows import Window\nfrom rasterio.plot import show\nfrom tensorflow.keras.models import load_model\n\n\n\n\nLaad het getrainde model in de notebook\nInclusief de tijdens trainen gebruikte ‘custom functions’ zodat het model geen foutmelding geeft tijdens het voorspellen.\n\n\nCode\n# Model V2 - 2023 with Wetterskip\nfolds = {4: {\"EPOCHS\": 150, \"batch\": 80, \"LR\": 0.0001}}\nfold = 4\nweights_folder = (\n    \"saved_weights/model_v2_plateau/\"\n    + \"BATCHSIZE_{}_LR_{}_EPOCH_{}_Fold_{}\".format(\n        folds[fold][\"batch\"], folds[fold][\"LR\"], folds[fold][\"EPOCHS\"], fold\n    )\n)\n\n\ndef dice_coef(y_true, y_pred):\n    y_true = tf.keras.layers.Flatten()(y_true)\n    y_pred = tf.keras.layers.Flatten()(y_pred)\n    intersection = tf.reduce_sum(y_true * y_pred)\n    smooth = 1e-15\n    return (2.0 * intersection + smooth) / (\n        tf.reduce_sum(y_true) + tf.reduce_sum(y_pred) + smooth\n    )\n\n\ndef dice_loss(y_true, y_pred):\n    return 1.0 - dice_coef(y_true, y_pred)\n\n\nmodel = load_model(\n    weights_folder, custom_objects={\"dice_loss\": dice_loss}, compile=False\n)\n\n\n\n\nHieronder een voorbeeld stuk dijk met droogtescheuren\n\n\nCode\ninputfolder = \"voorbeeld/\"\ninputtif = \"testfile_cracks_1024x2048.tif\"\n\nfig, ax = plt.subplots(1, figsize=(16, 32))\nraster_rio = rio.open(inputfolder + inputtif)\nshow(raster_rio, ax=ax)\n\n\n\n\nHaal het voorbeeldraster in opgesneden ‘windows’ door het model heen\nHier wordt door het raster bestand heen ‘geloopt’ met ‘windows’ van 256x256 pixels en elke ‘window’ zal een bijbehorende voorspelling krijgen. Deze voorspellingen zullen naar een nieuw gemaakt raster worden geschreven zodat het eindresultaat een raster met dezelfde afmetingen als het origineel is waarin aangegeven is waar geen scheur (0) en wel een scheur (1) zit.\n\n\nCode\n# Laad de folders\ninputfolder = \"voorbeeld/\"\ninputtif = \"testfile_cracks_1024x2048\"\nextension = \".tif\"\nlabelfolder = \"voorbeeld/label/\"\n\nfile_location = inputfolder + inputtif + extension\nlabel_location = labelfolder + inputtif + \"_label\" + extension\n\n# Update het originele profiel naar 1 band\nraster_file = rio.open(file_location)\nprofile = raster_file.profile.copy()\nprofile.update(count=1)\n\n# Maak het bestaand aan\nwith rio.open(str(label_location), \"w\", **profile) as out_file:\n    out_file.write(np.zeros([1, 1, 1]), window=Window.from_slices((0, 1), (0, 1)))\n\n# Totaal aantal windows\ntotal = ((profile[\"height\"] - 256) / 256) * ((profile[\"width\"] - 256) / 256)\n\n# Loop over de windows en voorspel\nfor idx in range(0, profile[\"height\"] - 256, 256):\n    for idy in range(0, profile[\"width\"] - 256, 256):\n        print(idx, \" of \", total)\n        wdw = Window.from_slices((idx, idx + 256), (idy, idy + 256))\n\n        with rio.open(str(file_location), \"r\") as out_file:\n            x = out_file.read(window=wdw)\n\n        x = x[:3, :, :]\n        x = np.rollaxis(x, 0, 3)\n\n        threshold = 0.8\n\n        y_pred = model.predict(np.expand_dims(x / 255, axis=0))[0]\n        y_pred_threshold = np.where((y_pred * 1000) &gt; (threshold), 1, 0)\n\n        with rio.open(str(label_location), \"r+\", **profile) as out_file:\n            out_file.write(y_pred_threshold.reshape(1, 256, 256), window=wdw)\n\n\n\n\nPlot het eindresultaat\nDoor middel van het laden van het voorspel raster als een ‘mask’ kan het over het originele stuk dijk heen worden gevisualiseerd waardoor de scheuren worden aangegeven op de dijk.\n\n\nCode\n# Maak een figuur aan\nfig, ax = plt.subplots(1, figsize=(16, 32))\n\n# Visualiseer het origineel\ninputfolder = \"voorbeeld/\"\ninputtif = \"testfile_cracks_1024x2048.tif\"\n\nraster_rio = rio.open(inputfolder + inputtif)\nraster_array = raster_rio.read()\n\nshow(raster_array, ax=ax)\n\n# Visualiseer hieroveer heen het label\ninputfolder = \"voorbeeld/label/\"\ninputtif = \"testfile_cracks_1024x2048_label.tif\"\n\nraster_rio = rio.open(inputfolder + inputtif)\nlabel_array = raster_rio.read()\n\nmasked_label = np.ma.masked_where(label_array == 0, label_array)\n\nax.imshow(masked_label.reshape(1024, 2048, 1), cmap=\"viridis\")",
-    "crumbs": [
-      "Meer weten",
-      "Meer over de AI Toolbox",
-      "Scheurdetectie op droogtegevoelige dijken"
-    ]
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "Over ons",
-    "section": "",
-    "text": "Dit is een initiatief van HHNK, het PIW-programma van STOWA en RWS-WVL en HKV. We willen hiermee beheer en onderhoud van waterkeringen efficiënter en effectiever maken.\nWaterschappen inspecteren jaarlijks vele duizenden kilometers waterkeringen. Om inzicht te krijgen in actuele sterkte van waterkeringen wordt het steeds belangrijker om te kijken naar verschillen in conditie ten opzichte van de uitgangspunten van de toetsing en beoordeling. Dit soort inspecties zijn arbeidsintensief. Beheerders geven aan dat het handmatig vastleggen van schadebeelden en het verwerken van inspecties zeer veel tijd kost. Onze algoritmes bieden daarvoor een oplossing door consequent foto’s te vertalen naar informatie over degradatie, schadebeelden en veranderingen.\nDe AI toolbox is een open ontwikkeling. Heb je vragen of wil je meewerken aan nieuwe ontwikkelingen, neem dan contact met ons op."
-  },
-  {
-    "objectID": "data.html",
-    "href": "data.html",
-    "title": "Trainingsdata",
-    "section": "",
-    "text": "In de trainingsdata staat alle data die ten grondslag ligt aan de ontwikkelde algoritmes. Om algoritmes door te ontwikkelen vinden wij het belangrijk dat je gebruik kunt maken van de originele gemarkeerde en gelabelde data. Het is mogelijk eigen databronnen toe te voegen. Omdat we in de opstartfase zitten is dit niet geautomatiseerd. Wil je deze data gebruiken of data toevoegen? Neem contact met ons op.\nIn onderstaande tabel zijn de eerste twee niveaus van de mappen in de opslag te zien.\n\n\n\nNaam\n\n\n\n\nopschot-detectie/\n\n\n    opschot-detectie/supervisely/\n\n\nscheurdetectie/\n\n\n    scheurdetectie/ilpendam/\n\n\n    scheurdetectie/jisp/"
   },
   {
     "objectID": "examples/opschotdetectie_voorbeeld.html",
@@ -97,10 +78,29 @@
     ]
   },
   {
-    "objectID": "contact.html",
-    "href": "contact.html",
-    "title": "Contact",
+    "objectID": "examples/scheurdetectie_voorbeeld.html",
+    "href": "examples/scheurdetectie_voorbeeld.html",
+    "title": "Scheurdetectie op droogtegevoelige dijken",
     "section": "",
-    "text": "Dit is een open ontwikkeling. Alle algoritmes zijn open source beschikbaar en we streven ernaar om de data science community in de watersector hiermee te enthousiasmeren, te stimuleren en te motiveren om samen met ons nieuwe algoritmes te ontwikkelen.\nWil je meewerken aan nieuwe ontwikkelingen, wil je toegang krijgen tot de trainingsdata (of wil je trainingsdata toevoegen), of heb je algemene vragen: neem dan contact met ons op via aitoolboxwaterkeringen@hkv.nl.\nVoor meer informatie neem contact op met:\n\nGuy Dupuits – inhoudelijk expert op waterkeringen en AI algoritmes (dupuits@hkv.nl)\nErik Vastenburg – waterveiligheidsadviseur bij HHNK (e.vastenburg@hhnk.nl)"
+    "text": "Dit is een voorbeeldnotebook om met een Unet model droogtescheuren op droogtegevoelige dijken te detecteren. Het model is getraind op een verschillende dijken in het beheergebied van HHNK en Wetterskip Fryslan.\n\nStel de ‘working directory’ in\nDit instellen is zodat de relatieve paden tot de scripts en het model goed worden opgepakt door dit notebook.\n\n\nCode\n%cd \"../../scripts/scheur-detectie/\"\n\n\n\n\nLaad de benodigde imports voor dit notebook\n\n\nCode\n# Imports\n\nimport tensorflow as tf\nimport rasterio as rio\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom rasterio.windows import Window\nfrom rasterio.plot import show\nfrom tensorflow.keras.models import load_model\n\n\n\n\nLaad het getrainde model in de notebook\nInclusief de tijdens trainen gebruikte ‘custom functions’ zodat het model geen foutmelding geeft tijdens het voorspellen.\n\n\nCode\n# Model V2 - 2023 with Wetterskip\nfolds = {4: {\"EPOCHS\": 150, \"batch\": 80, \"LR\": 0.0001}}\nfold = 4\nweights_folder = (\n    \"saved_weights/model_v2_plateau/\"\n    + \"BATCHSIZE_{}_LR_{}_EPOCH_{}_Fold_{}\".format(\n        folds[fold][\"batch\"], folds[fold][\"LR\"], folds[fold][\"EPOCHS\"], fold\n    )\n)\n\n\ndef dice_coef(y_true, y_pred):\n    y_true = tf.keras.layers.Flatten()(y_true)\n    y_pred = tf.keras.layers.Flatten()(y_pred)\n    intersection = tf.reduce_sum(y_true * y_pred)\n    smooth = 1e-15\n    return (2.0 * intersection + smooth) / (\n        tf.reduce_sum(y_true) + tf.reduce_sum(y_pred) + smooth\n    )\n\n\ndef dice_loss(y_true, y_pred):\n    return 1.0 - dice_coef(y_true, y_pred)\n\n\nmodel = load_model(\n    weights_folder, custom_objects={\"dice_loss\": dice_loss}, compile=False\n)\n\n\n\n\nHieronder een voorbeeld stuk dijk met droogtescheuren\n\n\nCode\ninputfolder = \"voorbeeld/\"\ninputtif = \"testfile_cracks_1024x2048.tif\"\n\nfig, ax = plt.subplots(1, figsize=(16, 32))\nraster_rio = rio.open(inputfolder + inputtif)\nshow(raster_rio, ax=ax)\n\n\n\n\nHaal het voorbeeldraster in opgesneden ‘windows’ door het model heen\nHier wordt door het raster bestand heen ‘geloopt’ met ‘windows’ van 256x256 pixels en elke ‘window’ zal een bijbehorende voorspelling krijgen. Deze voorspellingen zullen naar een nieuw gemaakt raster worden geschreven zodat het eindresultaat een raster met dezelfde afmetingen als het origineel is waarin aangegeven is waar geen scheur (0) en wel een scheur (1) zit.\n\n\nCode\n# Laad de folders\ninputfolder = \"voorbeeld/\"\ninputtif = \"testfile_cracks_1024x2048\"\nextension = \".tif\"\nlabelfolder = \"voorbeeld/label/\"\n\nfile_location = inputfolder + inputtif + extension\nlabel_location = labelfolder + inputtif + \"_label\" + extension\n\n# Update het originele profiel naar 1 band\nraster_file = rio.open(file_location)\nprofile = raster_file.profile.copy()\nprofile.update(count=1)\n\n# Maak het bestaand aan\nwith rio.open(str(label_location), \"w\", **profile) as out_file:\n    out_file.write(np.zeros([1, 1, 1]), window=Window.from_slices((0, 1), (0, 1)))\n\n# Totaal aantal windows\ntotal = ((profile[\"height\"] - 256) / 256) * ((profile[\"width\"] - 256) / 256)\n\n# Loop over de windows en voorspel\nfor idx in range(0, profile[\"height\"] - 256, 256):\n    for idy in range(0, profile[\"width\"] - 256, 256):\n        print(idx, \" of \", total)\n        wdw = Window.from_slices((idx, idx + 256), (idy, idy + 256))\n\n        with rio.open(str(file_location), \"r\") as out_file:\n            x = out_file.read(window=wdw)\n\n        x = x[:3, :, :]\n        x = np.rollaxis(x, 0, 3)\n\n        threshold = 0.8\n\n        y_pred = model.predict(np.expand_dims(x / 255, axis=0))[0]\n        y_pred_threshold = np.where((y_pred * 1000) &gt; (threshold), 1, 0)\n\n        with rio.open(str(label_location), \"r+\", **profile) as out_file:\n            out_file.write(y_pred_threshold.reshape(1, 256, 256), window=wdw)\n\n\n\n\nPlot het eindresultaat\nDoor middel van het laden van het voorspel raster als een ‘mask’ kan het over het originele stuk dijk heen worden gevisualiseerd waardoor de scheuren worden aangegeven op de dijk.\n\n\nCode\n# Maak een figuur aan\nfig, ax = plt.subplots(1, figsize=(16, 32))\n\n# Visualiseer het origineel\ninputfolder = \"voorbeeld/\"\ninputtif = \"testfile_cracks_1024x2048.tif\"\n\nraster_rio = rio.open(inputfolder + inputtif)\nraster_array = raster_rio.read()\n\nshow(raster_array, ax=ax)\n\n# Visualiseer hieroveer heen het label\ninputfolder = \"voorbeeld/label/\"\ninputtif = \"testfile_cracks_1024x2048_label.tif\"\n\nraster_rio = rio.open(inputfolder + inputtif)\nlabel_array = raster_rio.read()\n\nmasked_label = np.ma.masked_where(label_array == 0, label_array)\n\nax.imshow(masked_label.reshape(1024, 2048, 1), cmap=\"viridis\")",
+    "crumbs": [
+      "Meer weten",
+      "Meer over de AI Toolbox",
+      "Scheurdetectie op droogtegevoelige dijken"
+    ]
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "Over ons",
+    "section": "",
+    "text": "Dit is een initiatief van HHNK, het PIW-programma van STOWA en RWS-WVL en HKV. We willen hiermee beheer en onderhoud van waterkeringen efficiënter en effectiever maken.\nWaterschappen inspecteren jaarlijks vele duizenden kilometers waterkeringen. Om inzicht te krijgen in actuele sterkte van waterkeringen wordt het steeds belangrijker om te kijken naar verschillen in conditie ten opzichte van de uitgangspunten van de toetsing en beoordeling. Dit soort inspecties zijn arbeidsintensief. Beheerders geven aan dat het handmatig vastleggen van schadebeelden en het verwerken van inspecties zeer veel tijd kost. Onze algoritmes bieden daarvoor een oplossing door consequent foto’s te vertalen naar informatie over degradatie, schadebeelden en veranderingen.\nDe AI toolbox is een open ontwikkeling. Heb je vragen of wil je meewerken aan nieuwe ontwikkelingen, neem dan contact met ons op."
+  },
+  {
+    "objectID": "data.html",
+    "href": "data.html",
+    "title": "Trainingsdata",
+    "section": "",
+    "text": "In de trainingsdata staat alle data die ten grondslag ligt aan de ontwikkelde algoritmes. Om algoritmes door te ontwikkelen vinden wij het belangrijk dat je gebruik kunt maken van de originele gemarkeerde en gelabelde data. Het is mogelijk eigen databronnen toe te voegen. Omdat we in de opstartfase zitten is dit niet geautomatiseerd. Wil je deze data gebruiken of data toevoegen? Neem contact met ons op.\nIn onderstaande tabel zijn de eerste twee niveaus van de mappen in de opslag te zien.\n\n\n\nNaam\n\n\n\n\nopschot-detectie/\n\n\n    opschot-detectie/supervisely/\n\n\nscheurdetectie/\n\n\n    scheurdetectie/ilpendam/\n\n\n    scheurdetectie/jisp/"
   }
 ]
