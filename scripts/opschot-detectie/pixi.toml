@@ -1,11 +1,11 @@
-[project]
+[workspace]
 name = "opschot-detectie"
 description = "Opschot-detectie van houtachtige begroeiing op de steenbekleding van een waterkering"
 version = "1.0.0"
 channels = ["conda-forge"]
 platforms = ["linux-64", "win-64"]
 readme = "README.md"
-license = "GPL-3.0"
+license = "GPL-3.0-only"
 license-file = "LICENSE"
 
 [tasks]
